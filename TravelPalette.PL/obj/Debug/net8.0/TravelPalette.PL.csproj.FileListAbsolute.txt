@@ -1,0 +1,11 @@
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\bin\Debug\net8.0\TravelPalette.PL.deps.json
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\bin\Debug\net8.0\TravelPalette.PL.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\bin\Debug\net8.0\TravelPalette.PL.pdb
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\TravelPalette.PL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\TravelPalette.PL.AssemblyInfoInputs.cache
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\TravelPalette.PL.AssemblyInfo.cs
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\TravelPalette.PL.csproj.CoreCompileInputs.cache
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\TravelPalette.PL.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\refint\TravelPalette.PL.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\TravelPalette.PL.pdb
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.PL\obj\Debug\net8.0\ref\TravelPalette.PL.dll

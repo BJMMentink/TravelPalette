@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "TravelPalette.BL.Models/1.0.0": {
+        "runtime": {
+          "TravelPalette.BL.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TravelPalette.BL.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

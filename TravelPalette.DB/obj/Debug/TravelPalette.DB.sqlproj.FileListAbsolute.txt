@@ -1,0 +1,10 @@
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\bin\Debug\TravelPalette.DB.dacpac
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\bin\Debug\TravelPalette.DB.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\bin\Debug\TravelPalette.DB.pdb
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\TravelPalette.DB.sqlproj.AssemblyReference.cache
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\Model.xml
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\refactor.xml
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\postdeploy.sql
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\predeploy.sql
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\TravelPalette.DB.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.DB\obj\Debug\TravelPalette.DB.pdb

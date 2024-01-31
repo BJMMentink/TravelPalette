@@ -1,0 +1,11 @@
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\bin\Debug\net8.0\TravelPalette.BL.Models.deps.json
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\bin\Debug\net8.0\TravelPalette.BL.Models.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\bin\Debug\net8.0\TravelPalette.BL.Models.pdb
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\TravelPalette.BL.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\TravelPalette.BL.Models.AssemblyInfoInputs.cache
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\TravelPalette.BL.Models.AssemblyInfo.cs
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\TravelPalette.BL.Models.csproj.CoreCompileInputs.cache
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\TravelPalette.BL.Models.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\refint\TravelPalette.BL.Models.dll
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\TravelPalette.BL.Models.pdb
+C:\Users\INTEL4400\source\repos\TravelPalette\TravelPalette.BL.Models\obj\Debug\net8.0\ref\TravelPalette.BL.Models.dll
