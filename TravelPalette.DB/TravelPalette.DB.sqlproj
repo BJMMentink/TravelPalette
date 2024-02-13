@@ -64,5 +64,6 @@
     <Build Include="Tables\ListItem.sql" />
     <Build Include="Tables\LocationTag.sql" />
     <Build Include="Tables\Tag.sql" />
+    <Build Include="Tables\Schedule.sql" />
   </ItemGroup>
 </Project>
