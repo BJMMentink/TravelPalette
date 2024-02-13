@@ -70,4 +70,7 @@
     <Build Include="Tables\tblUserList.sql" />
     <Build Include="Tables\tblUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
 </Project>
