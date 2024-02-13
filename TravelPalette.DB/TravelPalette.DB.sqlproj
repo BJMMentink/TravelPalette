@@ -59,18 +59,22 @@
     <Folder Include="PostDeployment" />
     <Folder Include="PreDeployment" />
     <Folder Include="Tables" />
+    <Folder Include="PostDeployment\DefaultData" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblListItem.sql" />
     <Build Include="Tables\tblLocationTag.sql" />
     <Build Include="Tables\tblTag.sql" />
     <Build Include="Tables\tblSchedule.sql" />
-    <Build Include="Tables\tblLocation.sql" />
-    <Build Include="Tables\tblAddress.sql" />
-    <Build Include="Tables\tblUserList.sql" />
-    <Build Include="Tables\tblUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+    <None Include="PostDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PostDeployment\DefaultData\ListItems.sql" />
   </ItemGroup>
 </Project>
