@@ -60,8 +60,4 @@
     <Folder Include="PreDeployment" />
     <Folder Include="Tables" />
   </ItemGroup>
-  <ItemGroup>
-    <Build Include="Tables\tblUser.sql" />
-    <Build Include="Tables\tblTag.sql" />
-  </ItemGroup>
 </Project>
