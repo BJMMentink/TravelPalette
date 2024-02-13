@@ -66,4 +66,7 @@
     <Build Include="Tables\Tag.sql" />
     <Build Include="Tables\Schedule.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
 </Project>
