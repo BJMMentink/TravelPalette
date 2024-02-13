@@ -9,7 +9,7 @@
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-drop table if exists ListItem
-drop table if exists LocationTag
-drop table if exists Schedule
-drop table if exists Tag
+drop table if exists tblListItem
+drop table if exists tblLocationTag
+drop table if exists tblSchedule
+drop table if exists tblTag
