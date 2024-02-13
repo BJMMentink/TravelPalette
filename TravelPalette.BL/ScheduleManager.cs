@@ -8,5 +8,6 @@ namespace TravelPalette.BL
 {
     public class ScheduleManager
     {
+
     }
 }

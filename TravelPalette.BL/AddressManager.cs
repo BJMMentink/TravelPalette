@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TravelPalette.BL
 {
-    internal class AddressManager
+    public  class AddressManager
     {
+
     }
 }
