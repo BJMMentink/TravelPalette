@@ -65,5 +65,9 @@
     <Build Include="Tables\tblLocationTag.sql" />
     <Build Include="Tables\tblTag.sql" />
     <Build Include="Tables\tblSchedule.sql" />
+    <Build Include="Tables\tblLocation.sql" />
+    <Build Include="Tables\tblAddress.sql" />
+    <Build Include="Tables\tblUserList.sql" />
+    <Build Include="Tables\tblUser.sql" />
   </ItemGroup>
 </Project>
