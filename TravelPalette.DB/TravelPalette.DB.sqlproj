@@ -59,6 +59,7 @@
     <Folder Include="PostDeployment" />
     <Folder Include="PreDeployment" />
     <Folder Include="Tables" />
+    <Folder Include="PostDeployment\DefaultData" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblListItem.sql" />
@@ -68,5 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+    <None Include="PostDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PostDeployment\DefaultData\ListItems.sql" />
   </ItemGroup>
 </Project>
