@@ -81,10 +81,9 @@
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
-    <None Include="PostDeployment\Script.PreDeployment1.sql" />
+    <None Include="PostDeployment\DefaultData\ListItems.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PostDeployment\DefaultData\ListItems.sql" />
+    <PostDeploy Include="PostDeployment\Script.PostDeployment1.sql" />
   </ItemGroup>
 </Project>
