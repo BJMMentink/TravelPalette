@@ -70,6 +70,12 @@
     <Build Include="Tables\tblAddress.sql" />
     <Build Include="Tables\tblUserList.sql" />
     <Build Include="Tables\tblUser.sql" />
+    <None Include="PostDeployment\DefaultData\LocationTags.sql" />
+    <None Include="PostDeployment\DefaultData\Schedules.sql" />
+    <None Include="PostDeployment\DefaultData\Tags.sql" />
+    <None Include="PostDeployment\DefaultData\Addresses.sql" />
+    <None Include="PostDeployment\DefaultData\Users.sql" />
+    <None Include="PostDeployment\DefaultData\UserLists.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

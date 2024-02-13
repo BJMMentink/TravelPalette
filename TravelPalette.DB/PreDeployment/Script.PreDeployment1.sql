@@ -13,3 +13,7 @@ drop table if exists tblListItem
 drop table if exists tblLocationTag
 drop table if exists tblSchedule
 drop table if exists tblTag
+drop table if exists tblAddress
+drop table if exists tblUser
+drop table if exists tblUserList
+drop table if exists tblLocation

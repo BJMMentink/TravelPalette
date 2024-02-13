@@ -9,4 +9,10 @@
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+:r .\DefaultData\Addresses.sql
 :r .\DefaultData\ListItems.sql
+:r .\DefaultData\Locations.sql
+:r .\DefaultData\Schedules.sql
+:r .\DefaultData\Tags.sql
+:r .\DefaultData\UserLists.sql
+:r .\DefaultData\Users.sql
