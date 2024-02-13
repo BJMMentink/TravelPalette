@@ -61,10 +61,10 @@
     <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\ListItem.sql" />
-    <Build Include="Tables\LocationTag.sql" />
-    <Build Include="Tables\Tag.sql" />
-    <Build Include="Tables\Schedule.sql" />
+    <Build Include="Tables\tblListItem.sql" />
+    <Build Include="Tables\tblLocationTag.sql" />
+    <Build Include="Tables\tblTag.sql" />
+    <Build Include="Tables\tblSchedule.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

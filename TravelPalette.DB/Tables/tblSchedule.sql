@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Schedule]
+﻿CREATE TABLE [dbo].[tblSchedule]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [LocationId] INT NOT NULL, 
