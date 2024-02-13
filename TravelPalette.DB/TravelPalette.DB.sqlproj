@@ -60,4 +60,9 @@
     <Folder Include="PreDeployment" />
     <Folder Include="Tables" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\ListItem.sql" />
+    <Build Include="Tables\LocationTag.sql" />
+    <Build Include="Tables\Tag.sql" />
+  </ItemGroup>
 </Project>
