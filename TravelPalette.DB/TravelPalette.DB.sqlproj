@@ -73,7 +73,10 @@
     <None Include="PostDeployment\DefaultData\LocationTags.sql" />
     <None Include="PostDeployment\DefaultData\Schedules.sql" />
     <None Include="PostDeployment\DefaultData\Tags.sql" />
-    </ItemGroup>
+    <None Include="PostDeployment\DefaultData\Addresses.sql" />
+    <None Include="PostDeployment\DefaultData\Users.sql" />
+    <None Include="PostDeployment\DefaultData\UserLists.sql" />
+  </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
   </ItemGroup>

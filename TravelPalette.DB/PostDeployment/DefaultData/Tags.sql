@@ -1,5 +1,5 @@
 ﻿BEGIN
-    INSERT INTO dbo.tblTag (Id, Description)
+    INSERT INTO tblTag (Id, Description)
     VALUES
     (1, 'General'),
     (2, 'Food'),
