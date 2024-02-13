@@ -66,6 +66,9 @@
     <Build Include="Tables\tblLocationTag.sql" />
     <Build Include="Tables\tblTag.sql" />
     <Build Include="Tables\tblSchedule.sql" />
+    <None Include="PostDeployment\DefaultData\LocationTags.sql" />
+    <None Include="PostDeployment\DefaultData\Schedules.sql" />
+    <None Include="PostDeployment\DefaultData\Tags.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />

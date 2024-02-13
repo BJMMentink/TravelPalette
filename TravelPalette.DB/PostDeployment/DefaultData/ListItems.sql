@@ -1,5 +1,5 @@
 ﻿BEGIN
-    INSERT INTO dbo.tblListItem (Id, LocationId)
+    INSERT INTO tblListItem (Id, LocationId)
     VALUES
     (1, 100),
     (2, 200),
