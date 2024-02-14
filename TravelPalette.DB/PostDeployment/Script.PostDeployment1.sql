@@ -11,7 +11,7 @@ Post-Deployment Script Template
 */
 :r .\DefaultData\Addresses.sql
 :r .\DefaultData\ListItems.sql
-:r .\DefaultData\Locations.sql
+:r .\DefaultData\LocationTags.sql
 :r .\DefaultData\Schedules.sql
 :r .\DefaultData\Tags.sql
 :r .\DefaultData\UserLists.sql

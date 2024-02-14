@@ -9,15 +9,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPalette.BL", "TravelP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPalette.PL", "TravelPalette.PL\TravelPalette.PL.csproj", "{E0196D75-2C58-4FFC-BFFF-10AC8B359DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelPalette.BL.Test", "TravelPalette.BL.Test\TravelPalette.BL.Test.csproj", "{764EEC23-6B01-41B0-B190-9C892E6D3A28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPalette.BL.Test", "TravelPalette.BL.Test\TravelPalette.BL.Test.csproj", "{764EEC23-6B01-41B0-B190-9C892E6D3A28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelPalette.PL.Test", "TravelPalette.PL.Test\TravelPalette.PL.Test.csproj", "{67EC1EA7-3B99-4DEA-B227-ABC1922B7290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPalette.PL.Test", "TravelPalette.PL.Test\TravelPalette.PL.Test.csproj", "{67EC1EA7-3B99-4DEA-B227-ABC1922B7290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelPalette.UI.Test", "TravelPalette.UI.Test\TravelPalette.UI.Test.csproj", "{87FDF146-E0E8-43E5-9302-C8EEB3476BE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPalette.UI.Test", "TravelPalette.UI.Test\TravelPalette.UI.Test.csproj", "{87FDF146-E0E8-43E5-9302-C8EEB3476BE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelPalette.BL.Models", "TravelPalette.BL.Models\TravelPalette.BL.Models.csproj", "{69A1EE7F-2C0F-401B-8C19-1E11C1FBA6C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelPalette.BL.Models", "TravelPalette.BL.Models\TravelPalette.BL.Models.csproj", "{69A1EE7F-2C0F-401B-8C19-1E11C1FBA6C9}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TravelPalette.DB", "TravelPalette.DB\TravelPalette.DB.sqlproj", "{040E8741-56B2-4D1F-B8F1-9C492C7C36C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35DE0C52-C89E-4C88-98EF-4EAA3BABDFDC}"
+	ProjectSection(SolutionItems) = preProject
+		TextFile1.txt = TextFile1.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
