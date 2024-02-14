@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TravelPalette.BL.Models;
 
 namespace TravelPalette.BL
 {
-    public class TagManager
+    public class ListItemManager
     {
-        public static int Insert(Tag tag, bool rollback = false)
+        public static int Insert(ListItem listItem, bool rollback = false)
         {
             try
             {
@@ -19,13 +19,11 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = new tblTag();
-                    entity.Id = dc.tblTags.Any() ? dc.tblTags.Max(s => s.Id) + 1 : 1;
-                    entity.Description = tag.Description;
+                    tblListItem entity = new tblListItem();
+                    entity.Id = dc.tblListItems.Any() ? dc.tblListItems.Max(li => li.Id) + 1 : 1;
+                    entity.LocationId = listItem.LocationId;
 
-                    tag.Id = entity.Id; // Backfill the Id as a reference
-
-                    dc.tblTags.Add(entity);
+                    dc.tblListItems.Add(entity);
                     results = dc.SaveChanges();
 
                     if (rollback) transaction.Rollback();
@@ -38,7 +36,8 @@ namespace TravelPalette.BL
                 throw;
             }
         }
-        public static int Update(Tag tag, bool rollback = false)
+
+        public static int Update(ListItem listItem, bool rollback = false)
         {
             try
             {
@@ -48,28 +47,29 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == tag.Id);
+                    tblListItem entity = dc.tblListItems.FirstOrDefault(li => li.Id == listItem.Id);
 
                     if (entity != null)
                     {
-                        entity.Description = tag.Description;
+                        entity.LocationId = listItem.LocationId;
+
                         result = dc.SaveChanges();
                     }
                     else
                     {
-                        throw new Exception("Row does not exist.");
+                        throw new Exception("ListItem does not exist.");
                     }
 
                     if (rollback) transaction.Rollback();
                 }
                 return result;
             }
-
             catch (Exception)
             {
                 throw;
             }
         }
+
         public static int Delete(int Id, bool rollback = false)
         {
             try
@@ -80,85 +80,82 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == Id);
+                    tblListItem entity = dc.tblListItems.FirstOrDefault(li => li.Id == Id);
 
                     if (entity != null)
                     {
-                        dc.tblTags.Remove(entity); // Remove the row from the table
+                        dc.tblListItems.Remove(entity);
                         result = dc.SaveChanges();
                     }
                     else
                     {
-                        throw new Exception("Row does not exist.");
+                        throw new Exception("ListItem does not exist.");
                     }
 
                     if (rollback) transaction.Rollback();
                 }
                 return result;
             }
-
             catch (Exception)
             {
                 throw;
             }
         }
-        public static List<Tag> Load()
+
+        public static List<ListItem> Load()
         {
             try
             {
-                List<Tag> list = new List<Tag>();
+                List<ListItem> list = new List<ListItem>();
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    (from t in dc.tblTags
+                    (from li in dc.tblListItems
                      select new
                      {
-                         t.Id,
-                         t.Description,
+                         li.Id,
+                         li.LocationId
                      })
                      .ToList()
-                     .ForEach(tag => list.Add(new Tag
+                     .ForEach(listItem => list.Add(new ListItem
                      {
-                         Id = tag.Id,
-                         Description = tag.Description,
+                         Id = listItem.Id,
+                         LocationId = listItem.LocationId
                      }));
-
                 }
                 return list;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public static Tag LoadById(int id)
+
+        public static ListItem LoadById(int id)
         {
             try
             {
-                using ProgDecEntities dc = new ProgDecEntities())
+                using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == id);
+                    tblListItem entity = dc.tblListItems.FirstOrDefault(li => li.Id == id);
                     if (entity != null)
                     {
-                        return new Tag
+                        return new ListItem
                         {
                             Id = entity.Id,
-                            Description = entity.Description,
+                            LocationId = entity.LocationId
                         };
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("ListItem does not exist.");
                     }
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
     }
 }

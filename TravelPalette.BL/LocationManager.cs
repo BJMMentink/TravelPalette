@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TravelPalette.BL.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using TravelPalette.BL;
 
 namespace TravelPalette.BL
 {
-    public class TagManager
+    public class LocationManager
     {
-        public static int Insert(Tag tag, bool rollback = false)
+        public static int Insert(Models.Location location, bool rollback = false)
         {
             try
             {
@@ -19,13 +19,15 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = new tblTag();
-                    entity.Id = dc.tblTags.Any() ? dc.tblTags.Max(s => s.Id) + 1 : 1;
-                    entity.Description = tag.Description;
+                    tblLocation entity = new tblLocation();
+                    entity.Id = dc.tblLocations.Any() ? dc.tblLocations.Max(l => l.Id) + 1 : 1;
+                    entity.AddressId = location.AddressId;
+                    entity.Description = location.Description;
+                    entity.BusinessName = location.BusinessName;
+                    entity.Coordinates = location.Coordinates;
+                    entity.PhoneNumber = location.PhoneNumber;
 
-                    tag.Id = entity.Id; // Backfill the Id as a reference
-
-                    dc.tblTags.Add(entity);
+                    dc.tblLocations.Add(entity);
                     results = dc.SaveChanges();
 
                     if (rollback) transaction.Rollback();
@@ -38,7 +40,8 @@ namespace TravelPalette.BL
                 throw;
             }
         }
-        public static int Update(Tag tag, bool rollback = false)
+
+        public static int Update(Models.Location location, bool rollback = false)
         {
             try
             {
@@ -48,28 +51,33 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == tag.Id);
+                    tblLocation entity = dc.tblLocations.FirstOrDefault(l => l.Id == location.Id);
 
                     if (entity != null)
                     {
-                        entity.Description = tag.Description;
+                        entity.AddressId = location.AddressId;
+                        entity.Description = location.Description;
+                        entity.BusinessName = location.BusinessName;
+                        entity.Coordinates = location.Coordinates;
+                        entity.PhoneNumber = location.PhoneNumber;
+
                         result = dc.SaveChanges();
                     }
                     else
                     {
-                        throw new Exception("Row does not exist.");
+                        throw new Exception("Location does not exist.");
                     }
 
                     if (rollback) transaction.Rollback();
                 }
                 return result;
             }
-
             catch (Exception)
             {
                 throw;
             }
         }
+
         public static int Delete(int Id, bool rollback = false)
         {
             try
@@ -80,85 +88,95 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == Id);
+                    tblLocation entity = dc.tblLocations.FirstOrDefault(l => l.Id == Id);
 
                     if (entity != null)
                     {
-                        dc.tblTags.Remove(entity); // Remove the row from the table
+                        dc.tblLocations.Remove(entity);
                         result = dc.SaveChanges();
                     }
                     else
                     {
-                        throw new Exception("Row does not exist.");
+                        throw new Exception("Location does not exist.");
                     }
 
                     if (rollback) transaction.Rollback();
                 }
                 return result;
             }
-
             catch (Exception)
             {
                 throw;
             }
         }
-        public static List<Tag> Load()
+
+        public static List<Models.Location> Load()
         {
             try
             {
-                List<Tag> list = new List<Tag>();
+                List<Location> list = new List<Location>();
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    (from t in dc.tblTags
+                    (from l in dc.tblLocations
                      select new
                      {
-                         t.Id,
-                         t.Description,
+                         l.Id,
+                         l.AddressId,
+                         l.Description,
+                         l.BusinessName,
+                         l.Coordinates,
+                         l.PhoneNumber
                      })
                      .ToList()
-                     .ForEach(tag => list.Add(new Tag
+                     .ForEach(location => list.Add(new Location
                      {
-                         Id = tag.Id,
-                         Description = tag.Description,
+                         Id = location.Id,
+                         AddressId = location.AddressId,
+                         Description = location.Description,
+                         BusinessName = location.BusinessName,
+                         Coordinates = location.Coordinates,
+                         PhoneNumber = location.PhoneNumber
                      }));
-
                 }
                 return list;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public static Tag LoadById(int id)
+
+        public static Models.Location LoadById(int id)
         {
             try
             {
-                using ProgDecEntities dc = new ProgDecEntities())
+                using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == id);
+                    tblLocation entity = dc.tblLocations.FirstOrDefault(l => l.Id == id);
                     if (entity != null)
                     {
-                        return new Tag
+                        return new Location
                         {
                             Id = entity.Id,
+                            AddressId = entity.AddressId,
                             Description = entity.Description,
+                            BusinessName = entity.BusinessName,
+                            Coordinates = entity.Coordinates,
+                            PhoneNumber = entity.PhoneNumber
                         };
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("Location does not exist.");
                     }
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
     }
+
 }

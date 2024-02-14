@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TravelPalette.BL.Models;
 
 namespace TravelPalette.BL
 {
-    public class TagManager
+    public class UserListManager
     {
-        public static int Insert(Tag tag, bool rollback = false)
+        public static int Insert(UserList userList, bool rollback = false)
         {
             try
             {
@@ -19,13 +19,13 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = new tblTag();
-                    entity.Id = dc.tblTags.Any() ? dc.tblTags.Max(s => s.Id) + 1 : 1;
-                    entity.Description = tag.Description;
+                    tblUserList entity = new tblUserList();
+                    entity.Id = dc.tblUserLists.Any() ? dc.tblUserLists.Max(ul => ul.Id) + 1 : 1;
+                    entity.UserId = userList.UserId;
+                    entity.ListId = userList.ListId;
+                    entity.ListName = userList.ListName;
 
-                    tag.Id = entity.Id; // Backfill the Id as a reference
-
-                    dc.tblTags.Add(entity);
+                    dc.tblUserLists.Add(entity);
                     results = dc.SaveChanges();
 
                     if (rollback) transaction.Rollback();
@@ -38,7 +38,8 @@ namespace TravelPalette.BL
                 throw;
             }
         }
-        public static int Update(Tag tag, bool rollback = false)
+
+        public static int Update(UserList userList, bool rollback = false)
         {
             try
             {
@@ -48,28 +49,31 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == tag.Id);
+                    tblUserList entity = dc.tblUserLists.FirstOrDefault(ul => ul.Id == userList.Id);
 
                     if (entity != null)
                     {
-                        entity.Description = tag.Description;
+                        entity.UserId = userList.UserId;
+                        entity.ListId = userList.ListId;
+                        entity.ListName = userList.ListName;
+
                         result = dc.SaveChanges();
                     }
                     else
                     {
-                        throw new Exception("Row does not exist.");
+                        throw new Exception("UserList does not exist.");
                     }
 
                     if (rollback) transaction.Rollback();
                 }
                 return result;
             }
-
             catch (Exception)
             {
                 throw;
             }
         }
+
         public static int Delete(int Id, bool rollback = false)
         {
             try
@@ -80,85 +84,89 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == Id);
+                    tblUserList entity = dc.tblUserLists.FirstOrDefault(ul => ul.Id == Id);
 
                     if (entity != null)
                     {
-                        dc.tblTags.Remove(entity); // Remove the row from the table
+                        dc.tblUserLists.Remove(entity);
                         result = dc.SaveChanges();
                     }
                     else
                     {
-                        throw new Exception("Row does not exist.");
+                        throw new Exception("UserList does not exist.");
                     }
 
                     if (rollback) transaction.Rollback();
                 }
                 return result;
             }
-
             catch (Exception)
             {
                 throw;
             }
         }
-        public static List<Tag> Load()
+
+        public static List<UserList> Load()
         {
             try
             {
-                List<Tag> list = new List<Tag>();
+                List<UserList> list = new List<UserList>();
 
                 using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    (from t in dc.tblTags
+                    (from ul in dc.tblUserLists
                      select new
                      {
-                         t.Id,
-                         t.Description,
+                         ul.Id,
+                         ul.UserId,
+                         ul.ListId,
+                         ul.ListName
                      })
                      .ToList()
-                     .ForEach(tag => list.Add(new Tag
+                     .ForEach(userList => list.Add(new UserList
                      {
-                         Id = tag.Id,
-                         Description = tag.Description,
+                         Id = userList.Id,
+                         UserId = userList.UserId,
+                         ListId = userList.ListId,
+                         ListName = userList.ListName
                      }));
-
                 }
                 return list;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-        public static Tag LoadById(int id)
+
+        public static UserList LoadById(int id)
         {
             try
             {
-                using ProgDecEntities dc = new ProgDecEntities())
+                using (ProgDecEntities dc = new ProgDecEntities())
                 {
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == id);
+                    tblUserList entity = dc.tblUserLists.FirstOrDefault(ul => ul.Id == id);
                     if (entity != null)
                     {
-                        return new Tag
+                        return new UserList
                         {
                             Id = entity.Id,
-                            Description = entity.Description,
+                            UserId = entity.UserId,
+                            ListId = entity.ListId,
+                            ListName = entity.ListName
                         };
                     }
                     else
                     {
-                        throw new Exception();
+                        throw new Exception("UserList does not exist.");
                     }
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
     }
+
 }
