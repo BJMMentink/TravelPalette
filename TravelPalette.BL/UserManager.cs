@@ -40,7 +40,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -76,7 +76,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -111,7 +111,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -141,7 +141,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     tblUser entity = dc.tblUsers.FirstOrDefault(s => s.Id == id);
 
@@ -176,7 +176,7 @@ namespace TravelPalette.BL
             {
                 List<User> list = new List<User>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from a in dc.tblUsers
                      join sa in dc.tblStudentUsers on a.Id equals sa.UserId
@@ -207,7 +207,7 @@ namespace TravelPalette.BL
             {
                 List<User> list = new List<User>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from s in dc.tblUsers
                      select new

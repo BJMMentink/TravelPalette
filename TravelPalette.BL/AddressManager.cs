@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TravelPalette.BL.Models;
+using TravelPalette.PL;
 
 namespace TravelPalette.BL
 {
@@ -15,7 +17,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -47,7 +49,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -83,7 +85,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -116,7 +118,7 @@ namespace TravelPalette.BL
             {
                 List<Address> list = new List<Address>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from a in dc.tblAddresss
                      select new
@@ -149,7 +151,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using ProgDecEntities dc = new ProgDecEntities())
+                using TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     tblAddress entity = dc.tblAddresss.FirstOrDefault(s => s.Id == id);
                     if (entity != null)

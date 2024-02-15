@@ -14,7 +14,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -44,7 +44,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -79,7 +79,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -112,7 +112,7 @@ namespace TravelPalette.BL
             {
                 List<UserList> list = new List<UserList>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from ul in dc.tblUserLists
                      select new
@@ -143,7 +143,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     tblUserList entity = dc.tblUserLists.FirstOrDefault(ul => ul.Id == id);
                     if (entity != null)

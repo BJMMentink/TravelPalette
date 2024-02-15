@@ -14,7 +14,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -46,7 +46,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -83,7 +83,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -116,7 +116,7 @@ namespace TravelPalette.BL
             {
                 List<Location> list = new List<Location>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from l in dc.tblLocations
                      select new
@@ -151,7 +151,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     tblLocation entity = dc.tblLocations.FirstOrDefault(l => l.Id == id);
                     if (entity != null)

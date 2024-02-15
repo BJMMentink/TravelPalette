@@ -14,7 +14,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -56,7 +56,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -103,7 +103,7 @@ namespace TravelPalette.BL
             try
             {
                 int result = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -136,7 +136,7 @@ namespace TravelPalette.BL
             {
                 List<Schedule> list = new List<Schedule>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from s in dc.tblSchedules
                      select new
@@ -191,7 +191,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     tblSchedule entity = dc.tblSchedules.FirstOrDefault(s => s.Id == id);
                     if (entity != null)
