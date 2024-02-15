@@ -136,9 +136,9 @@ namespace TravelPalette.BL
         {
             try
             {
-                using TravelPaletteEntities dc = new TravelPaletteEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    tblTag entity = dc.tblTags.FirstOrDefault(s => s.Id == id);
+                    tblTag entity = dc.tblTags.FirstOrDefault(t => t.Id == id);
                     if (entity != null)
                     {
                         return new Tag

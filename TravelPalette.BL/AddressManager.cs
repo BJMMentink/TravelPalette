@@ -23,7 +23,7 @@ namespace TravelPalette.BL
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
                     tblAddress entity = new tblAddress();
-                    entity.Id = dc.tblAddresss.Any() ? dc.tblAddresss.Max(s => s.Id) + 1 : 1;
+                    entity.Id = dc.tblAddresses.Any() ? dc.tblAddresses.Max(a => a.Id) + 1 : 1;
                     entity.StreetName = address.StreetName;
                     entity.City = address.City;
                     entity.ZIP = address.ZIP;
@@ -31,7 +31,7 @@ namespace TravelPalette.BL
 
                     address.Id = entity.Id; // Backfill the Id as a reference
 
-                    dc.tblAddresss.Add(entity);
+                    dc.tblAddresses.Add(entity);
                     results = dc.SaveChanges();
 
                     if (rollback) transaction.Rollback();
@@ -54,7 +54,7 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblAddress entity = dc.tblAddresss.FirstOrDefault(s => s.Id == address.Id);
+                    tblAddress entity = dc.tblAddresses.FirstOrDefault(s => s.Id == address.Id);
 
                     if (entity != null)
                     {
@@ -90,11 +90,11 @@ namespace TravelPalette.BL
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
-                    tblAddress entity = dc.tblAddresss.FirstOrDefault(s => s.Id == Id);
+                    tblAddress entity = dc.tblAddresses.FirstOrDefault(s => s.Id == Id);
 
                     if (entity != null)
                     {
-                        dc.tblAddresss.Remove(entity); // Remove the row from the table
+                        dc.tblAddresses.Remove(entity); // Remove the row from the table
                         result = dc.SaveChanges();
                     }
                     else
@@ -120,9 +120,10 @@ namespace TravelPalette.BL
 
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    (from a in dc.tblAddresss
+                    (from a in dc.tblAddresses
                      select new
                      {
+                         a.Id,
                          a.StreetName,
                          a.City,
                          a.ZIP,
@@ -151,9 +152,9 @@ namespace TravelPalette.BL
         {
             try
             {
-                using TravelPaletteEntities dc = new TravelPaletteEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    tblAddress entity = dc.tblAddresss.FirstOrDefault(s => s.Id == id);
+                    tblAddress entity = dc.tblAddresses.FirstOrDefault(a => a.Id == id);
                     if (entity != null)
                     {
                         return new Address

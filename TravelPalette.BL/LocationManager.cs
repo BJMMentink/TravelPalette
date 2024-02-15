@@ -41,7 +41,7 @@ namespace TravelPalette.BL
             }
         }
 
-        public static int Update(Models.Location location, bool rollback = false)
+        public static int Update(Location location, bool rollback = false)
         {
             try
             {

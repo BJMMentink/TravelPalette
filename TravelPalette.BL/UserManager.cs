@@ -47,7 +47,7 @@ namespace TravelPalette.BL
 
                     tblUser entity = new tblUser();
 
-                    entity.Id = dc.tblUsers.Any() ? dc.tblUsers.Max(s => s.Id) + 1 : 1;
+                    entity.Id = dc.tblUsers.Any() ? dc.tblUsers.Max(u => u.Id) + 1 : 1;
                     entity.Username = user.Username;
                     entity.Password = user.Password;
                     entity.Email = user.Email;
@@ -82,7 +82,7 @@ namespace TravelPalette.BL
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
                     // Get the row we are trying to update
-                    tblUser entity = dc.tblUsers.FirstOrDefault(s => s.Id == user.Id);
+                    tblUser entity = dc.tblUsers.FirstOrDefault(u => u.Id == user.Id);
                     if (entity != null)
                     {
                         entity.Username = user.Username;
@@ -117,7 +117,7 @@ namespace TravelPalette.BL
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
                     // Get the row we are trying to update
-                    tblUser entity = dc.tblUsers.FirstOrDefault(s => s.Id == id);
+                    tblUser entity = dc.tblUsers.FirstOrDefault(u => u.Id == id);
                     if (entity != null)
                     {
                         dc.tblUsers.Remove(entity);
@@ -143,7 +143,7 @@ namespace TravelPalette.BL
             {
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    tblUser entity = dc.tblUsers.FirstOrDefault(s => s.Id == id);
+                    tblUser entity = dc.tblUsers.FirstOrDefault(u => u.Id == id);
 
                     if (entity != null)
                     {
@@ -151,11 +151,10 @@ namespace TravelPalette.BL
                         {
                             Id = entity.Id,
                             Username = entity.Username,
-
-
-
-
-
+                            Password = entity.Password,
+                            FirstName = entity.FirstName,
+                            LastName = entity.LastName,
+                            Email = entity.Email
                         };
                     }
                     else
@@ -163,37 +162,6 @@ namespace TravelPalette.BL
                         throw new Exception();
                     }
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public static List<User> Load(int studentId)
-        {
-            try
-            {
-                List<User> list = new List<User>();
-
-                using (TravelPaletteEntities dc = new TravelPaletteEntities())
-                {
-                    (from a in dc.tblUsers
-                     join sa in dc.tblStudentUsers on a.Id equals sa.UserId
-                     where sa.StudentId == studentId
-                     select new
-                     {
-                         a.Id,
-                         a.Name
-                     })
-                     .ToList()
-                     .ForEach(user => list.Add(new User
-                     {
-                         Id = user.Id,
-                         Name = user.Name
-                     }));
-                }
-                return list;
             }
             catch (Exception)
             {
@@ -209,18 +177,27 @@ namespace TravelPalette.BL
 
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    (from s in dc.tblUsers
+                    (from u in dc.tblUsers
                      select new
                      {
-                         s.Id,
-                         s.Name
+                         u.Id,
+                         u.Username,
+                         u.Password,
+                         u.FirstName,
+                         u.LastName,
+                         u.Email
                      })
                      .ToList()
                      .ForEach(user => list.Add(new User
                      {
                          Id = user.Id,
-                         Name = user.Name
+                         Username = user.Username,
+                         Password = user.Password,
+                         FirstName = user.FirstName,
+                         LastName = user.LastName,
+                         Email = user.Email
                      }));
+
                 }
                 return list;
             }
