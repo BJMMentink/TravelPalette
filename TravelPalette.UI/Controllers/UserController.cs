@@ -1,15 +1,31 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TravelPalette.BL.Models;
+
 
 namespace TravelPalette.UI.Controllers
 {
     public class UserController : Controller
     {
         // GET: UserController
-        public ActionResult Index()
+        public IActionResult Index()
         {
+            ViewBag.Title = "Login";
             return View();
         }
+
+        public IActionResult Login()
+        {
+            ViewBag.Title = "Login To Your Account!";
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            ViewBag.Title = "You're Logged Out!";
+            return View();
+        }
+
 
         // GET: UserController/Details/5
         public ActionResult Details(int id)
