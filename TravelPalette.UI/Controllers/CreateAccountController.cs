@@ -1,13 +1,21 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TravelPalette.BL.Models;
 
 namespace TravelPalette.UI.Controllers
 {
     public class CreateAccountController : Controller
     {
         // GET: CreateAccount
-        public ActionResult Index()
+        public IActionResult Index()
         {
+            ViewBag.Title = "Welcome, Make An Account";
+            return View();
+        }
+
+        public IActionResult CreateAccount()
+        {
+            ViewBag.Title = "Welcome, Make Your Account";
             return View();
         }
 
