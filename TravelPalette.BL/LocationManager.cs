@@ -9,7 +9,7 @@ namespace TravelPalette.BL
 {
     public class LocationManager
     {
-        public static int Insert(Models.Location location, bool rollback = false)
+        public static int Insert(Location location, bool rollback = false)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace TravelPalette.BL
             }
         }
 
-        public static List<Models.Location> Load()
+        public static List<Location> Load()
         {
             try
             {
@@ -147,7 +147,7 @@ namespace TravelPalette.BL
             }
         }
 
-        public static Models.Location LoadById(int id)
+        public static Location LoadById(int id)
         {
             try
             {
