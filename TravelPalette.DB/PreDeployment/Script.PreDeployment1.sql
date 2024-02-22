@@ -11,6 +11,7 @@
 */
 drop table if exists tblListItem
 drop table if exists tblLocationTag
+drop table if exists tblLocation
 drop table if exists tblSchedule
 drop table if exists tblTag
 drop table if exists tblAddress
