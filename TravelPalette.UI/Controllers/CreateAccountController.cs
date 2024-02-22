@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using TravelPalette.BL;
 using TravelPalette.BL.Models;
+using TravelPalette.UI.Models;
 
 namespace TravelPalette.UI.Controllers
 {
     public class CreateAccountController : Controller
     {
-        // GET: CreateAccount
+      
         public IActionResult Index()
         {
             ViewBag.Title = "Welcome, Make An Account";
-            return View();
+            return View(UserManager.Load());
         }
 
         public IActionResult CreateAccount()
@@ -19,72 +22,81 @@ namespace TravelPalette.UI.Controllers
             return View();
         }
 
-        // GET: CreateAccount/Details/5
+        
         public ActionResult Details(int id)
         {
-            return View();
+            var item = UserManager.LoadById(id);
+            ViewBag.Title = "Details for your Account";
+            return View(item);
         }
 
-        // GET: CreateAccount/Create
+    
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Title = "Create a new Account";
+           // if (Authenticate.IsAuthenticated(HttpContext))
+                return View();
+          //  else
+                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
         }
 
-        // POST: CreateAccount/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(User user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                int result = UserManager.Insert(user);
+                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                throw;
             }
         }
 
-        // GET: CreateAccount/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.Title = "Edit Account";
+            //if (Authenticate.IsAuthenticated(HttpContext))
+                return View();
+           // else
+                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
         }
 
-        // POST: CreateAccount/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, User user, bool rollback = false)
         {
             try
             {
+                int result = UserManager.Update(user, rollback);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                return View(user);
             }
         }
 
-        // GET: CreateAccount/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var item = UserManager.LoadById(id);
+            ViewBag.Title = "Delete Account";
+            return View(item);
         }
 
-        // POST: CreateAccount/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, User user, bool rollback = false)
         {
             try
             {
+                int result = UserManager.Delete(id, rollback);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                return View(user);
             }
         }
     }
