@@ -6,9 +6,8 @@
 <html lang='en'>
 <head>
     <meta charset='utf-8' />
-    <title>Add custom markers in Mapbox GL JS</title>
+    <title>Points on a map</title>
     <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css' rel='stylesheet' />
     <style>
@@ -26,72 +25,20 @@
     </style>
 </head>
 <body>
-
     <div id='map'></div>
-
     <script>
-
-        mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHQ0MmtsaTYyNHFoMmxwaHdmZTM4cTQ0In0.bLg5f_ilO3t4QfJyuV0fdQ';
-
+        // The value for 'accessToken' begins with 'pk...'
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
         const map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/mapbox/light-v11',
-            center: [-96, 37.8],
-            zoom: 3
+            // Replace YOUR_STYLE_URL with your style URL.
+            style: 'mapbox://styles/leumas1231/clt43l72n02en01qj7nmoh5cx',
+            center: [-87.661557, 41.893748],
+            zoom: 10.7
         });
 
-        // code from the next step will go here!
+        // Code from the next step will go here.
 
-        const geojson = {
-            type: 'FeatureCollection',
-            features: [
-                {
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [-77.032, 38.913]
-                    },
-                    properties: {
-                        title: 'Mapbox',
-                        description: 'Washington, D.C.'
-                    }
-                },
-                {
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [-122.414, 37.776]
-                    },
-                    properties: {
-                        title: 'Mapbox',
-                        description: 'San Francisco, California'
-                    }
-                }
-            ]
-        };
-
-        // add markers to map
-        for (const feature of geojson.features) {
-            // create a HTML element for each feature
-            const el = document.createElement('div');
-            el.className = 'marker';
-
-            new mapboxgl.Marker(el)
-                .setLngLat(feature.geometry.coordinates)
-                .setPopup(
-                    new mapboxgl.Popup({ offset: 25 }) // add popups
-                        .setHTML(
-                            `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
-                        )
-                )
-                .addTo(map);
-
-            // make a marker for each feature and add to the map
-            new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-
-
-        }
     </script>
-
 </body>
 </html>
