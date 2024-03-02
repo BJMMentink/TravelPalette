@@ -37,7 +37,7 @@ namespace TravelPalette.UI.Controllers
             if (Authenticate.IsAuthenticated(HttpContext))
                 return View();
             else
-                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+                return RedirectToAction("Index", "Home", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace TravelPalette.UI.Controllers
             try
             {
                 int result = UserManager.Insert(user);
-                return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+                return RedirectToAction("Index", "Home", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
             }
             catch (Exception)
             {
