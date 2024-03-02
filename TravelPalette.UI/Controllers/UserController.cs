@@ -126,7 +126,7 @@ namespace TravelPalette.UI.Controllers
                 if (TempData["returnUrl"] != null)
                     return Redirect(TempData["returnUrl"]?.ToString());  // this is going directly to a view
 
-                return RedirectToAction(nameof(Index), "Movie");
+                return RedirectToAction(nameof(Index), "Home");
             }
             catch (Exception ex)
             {
@@ -138,8 +138,8 @@ namespace TravelPalette.UI.Controllers
 
         public IActionResult Logout()
         {
-            ViewBag.Title = "You're Logged Out!";
-           // SetUser(null);
+            //ViewBag.Title = "Logout";
+            //SetUser(null);
             return View();
         }
     }

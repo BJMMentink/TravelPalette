@@ -34,9 +34,9 @@ namespace TravelPalette.UI.Controllers
         public ActionResult Create()
         {
             ViewBag.Title = "Create a new Account";
-           // if (Authenticate.IsAuthenticated(HttpContext))
+            if (Authenticate.IsAuthenticated(HttpContext))
                 return View();
-          //  else
+            else
                 return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
         }
 
@@ -57,9 +57,9 @@ namespace TravelPalette.UI.Controllers
         public ActionResult Edit(int id)
         {
             ViewBag.Title = "Edit Account";
-            //if (Authenticate.IsAuthenticated(HttpContext))
+            if (Authenticate.IsAuthenticated(HttpContext))
                 return View();
-           // else
+            else
                 return RedirectToAction("Login", "User", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
         }
 
