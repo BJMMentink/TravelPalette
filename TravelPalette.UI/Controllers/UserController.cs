@@ -44,7 +44,7 @@ namespace TravelPalette.UI.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Title = "Create";
+            ViewBag.Title = "Create Account";
             return View();
         }
 
