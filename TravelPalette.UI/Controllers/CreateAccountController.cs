@@ -46,7 +46,7 @@ namespace TravelPalette.UI.Controllers
             try
             {
                 int result = UserManager.Insert(user);
-                return RedirectToAction("Index", "Home", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
