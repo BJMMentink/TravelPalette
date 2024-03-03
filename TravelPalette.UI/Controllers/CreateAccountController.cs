@@ -16,13 +16,13 @@ namespace TravelPalette.UI.Controllers
             return View(UserManager.Load());
         }
 
-        public IActionResult CreateAccount()
-        {
-            ViewBag.Title = "Welcome, Make Your Account";
-            return View();
-        }
+        //public IActionResult CreateAccount()
+        //{
+        //    ViewBag.Title = "Welcome, Make Your Account";
+        //    return View();
+        //}
 
-        
+
         public ActionResult Details(int id)
         {
             var item = UserManager.LoadById(id);
@@ -34,10 +34,10 @@ namespace TravelPalette.UI.Controllers
         public ActionResult Create()
         {
             ViewBag.Title = "Create a new Account";
-            if (Authenticate.IsAuthenticated(HttpContext))
+            // (Authenticate.IsAuthenticated(HttpContext))
                 return View();
-            else
-                return RedirectToAction("Index", "Home", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+            //else
+            //    return RedirectToAction("Index", "Home", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace TravelPalette.UI.Controllers
             try
             {
                 int result = UserManager.Insert(user);
-                return RedirectToAction("Index", "Home", new { returnUrl = UriHelper.GetDisplayUrl(HttpContext.Request) });
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
