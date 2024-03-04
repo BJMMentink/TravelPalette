@@ -1,1 +1,12 @@
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using System;
+global using System.Linq;
+global using Microsoft.Extensions.Configuration;
+global using TravelPalette.PL;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.Options;
+global using System.Collections.Generic;
+global using System.IO;
