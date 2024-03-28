@@ -24,7 +24,7 @@ namespace TravelPalette.BL.Models
         [DisplayName("Last Name")]
         public string LastName { get; set; }
 
-        [DisplayName("User Full Name")]
+        [DisplayName("Full Name")]
         public string FullName { get { return FirstName + " " + LastName; } }
     }
 }

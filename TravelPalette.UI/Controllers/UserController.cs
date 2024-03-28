@@ -13,7 +13,7 @@ namespace TravelPalette.UI.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.Title = "Login";
+            ViewBag.Title = "Login To Your Travel Palette Account";
             return View(UserManager.Load());
         }
 
@@ -113,7 +113,7 @@ namespace TravelPalette.UI.Controllers
             }
         }
 
-        public IActionResult DeleteAll(int id)
+        public IActionResult Delete(int id)
         {
             var item = UserManager.LoadById(id);
             ViewBag.Title = "Delete a User";
@@ -121,11 +121,11 @@ namespace TravelPalette.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteAll(int id, User user, bool rollback = false)
+        public IActionResult Delete(int id, User user, bool rollback = false)
         {
             try
             {
-                int result = UserManager.DeleteAll(id, rollback);
+                int result = UserManager.Delete(id, rollback);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
