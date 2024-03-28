@@ -24,7 +24,7 @@ namespace TravelPalette.BL.Test
         [TestMethod]
         public void LoadTest()
         {
-            Assert.AreEqual(3, UserManager.Load().Count);
+            Assert.AreEqual(6, UserManager.Load().Count);
         }
 
         [TestMethod]
@@ -120,20 +120,20 @@ namespace TravelPalette.BL.Test
             }
         }
 
-        //[TestMethod]
-       // public void UpdateTest()
-        //{
-            // Arrange
-           // var userId = 2;
-           // var updatedLastName = "UpdatedLastName";
+        [TestMethod]
+        public void UpdateTest()
+        {
+             //Arrange
+            var userId = 2;
+            var updatedLastName = "UpdatedLastName";
 
-            // Act
-           // var user = UserManager.LoadById(userId);
-         //   user.LastName = updatedLastName;
-           // var result = UserManager.Update(user, true);
+           // Act
+            var user = UserManager.LoadById(userId);
+            user.LastName = updatedLastName;
+            var result = UserManager.Update(user, true);
 
-            // Assert
-           // Assert.AreEqual(1, result);
-       // }
+            //Assert
+            Assert.AreEqual(1, result);
+        }
     }
 }

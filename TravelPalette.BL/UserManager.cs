@@ -235,7 +235,7 @@ namespace TravelPalette.BL
                                 }
                                 else
                                 {
-                                    throw new LoginFailureException("User was not found.");
+                                    throw new LoginFailureException("Username was not found.");
                                 }
                             }
                         }
@@ -246,7 +246,7 @@ namespace TravelPalette.BL
                     }
                     else
                     {
-                        throw new LoginFailureException("Username was not set.");
+                        throw new LoginFailureException("User was not set.");
                     }
                 }
                 catch (LoginFailureException)
