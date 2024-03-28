@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TravelPalette.BL.Models\TravelPalette.BL.Models.csproj" />
+    <ProjectReference Include="..\TravelPalette.PL.Test\TravelPalette.PL.Test.csproj" />
     <ProjectReference Include="..\TravelPalette.PL\TravelPalette.PL.csproj" />
   </ItemGroup>
 
