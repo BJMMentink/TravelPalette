@@ -68,7 +68,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -105,7 +105,7 @@ namespace TravelPalette.BL
             try
             {
                 int results = 0;
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
@@ -141,7 +141,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     dc.tblUsers.RemoveRange(dc.tblUsers.ToList());
                     return dc.SaveChanges();
@@ -159,7 +159,7 @@ namespace TravelPalette.BL
         {
             try
             {
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     var entity = (from u in dc.tblUsers
                                   select new
@@ -208,7 +208,7 @@ namespace TravelPalette.BL
            // {
            //     List<User> list = new List<User>();
 
-               // using (ProgDecEntities dc = new ProgDecEntities())
+               // using (TravelPaletteEntities dc = new TravelPaletteEntities())
                // {
                  //   (from u in dc.tblUsers
               //       select new
@@ -238,7 +238,7 @@ namespace TravelPalette.BL
             {
                 List<User> list = new List<User>();
 
-                using (ProgDecEntities dc = new ProgDecEntities())
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     (from u in dc.tblUsers
                      select new
@@ -279,7 +279,7 @@ namespace TravelPalette.BL
                 {
                     if (!string.IsNullOrEmpty(user.Password))
                     {
-                        using (ProgDecEntities dc = new ProgDecEntities())
+                        using (TravelPaletteEntities dc = new TravelPaletteEntities())
                         {
                             tblUser tblUser = dc.tblUsers.FirstOrDefault(u => u.Username == user.Username);
                             if (tblUser != null)
@@ -326,7 +326,7 @@ namespace TravelPalette.BL
         //bmb added
         public static void Seed()
         {
-            using (ProgDecEntities dc = new ProgDecEntities())
+            using (TravelPaletteEntities dc = new TravelPaletteEntities())
             {
                 //"if i don't have any make some"
                 if (!dc.tblUsers.Any())
