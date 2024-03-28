@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using TravelPalette.BL;
 using TravelPalette.BL.Models;
 using TravelPalette.UI.Extensions;
+using TravelPalette.UI.Models;
 
 
 namespace TravelPalette.UI.Controllers
@@ -34,7 +36,6 @@ namespace TravelPalette.UI.Controllers
                 HttpContext.Session.SetObject("FullName", string.Empty);
             }
         }
-
         public IActionResult Create()
         {
             ViewBag.Title = "Create Account";
