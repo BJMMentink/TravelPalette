@@ -77,7 +77,7 @@
                                 var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
                                 if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
                             }
-                            <a class="nav-link text-light"></a>
+                            <a class="nav-link text-dark">@FullName</a>
                         </li>
                     </ul>
                 </div>
