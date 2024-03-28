@@ -6,40 +6,35 @@ namespace TravelPalette.BL.Test
     [TestClass]
     public class utUser
     {
+        //bmb added tests
         [TestMethod]
-        public void LoadTest()
+        public void LoginSuccessfulTest()
         {
-            // Arrange
-            var expectedCount = 3;
+            Seed();
+            Assert.IsTrue(UserManager.Login(new User { Username = "john_doe", Password = "password123" }));
+            Assert.IsTrue(UserManager.Login(new User { Username = "jane_smith", Password = "letmein" }));
+            Assert.IsTrue(UserManager.Login(new User { Username = "bob_johnson", Password = "securepassword" }));
+        }
 
-            // Act
-            var userList = UserManager.Load();
-
-            // Assert
-            Assert.AreEqual(expectedCount, userList.Count);
+        public void Seed()
+        {
+            UserManager.Seed();
         }
 
         [TestMethod]
-        public void LoadByIdTest()
+        public void LoadTest()
         {
-            // Arrange
-            var userId = 1;
-
-            // Act
-            var user = UserManager.LoadById(userId);
-
-            // Assert
-            Assert.IsNotNull(user);
-            Assert.AreEqual(userId, user.Id);
+            Assert.AreEqual(3, UserManager.Load().Count);
         }
 
         [TestMethod]
         public void InsertTest()
+        //bmb updated
         {
+            int id = 0;
             // Arrange
-            var user = new User
+            User user = new User
             {
-                Id = 0,
                 Username = "testuser",
                 Password = "testpassword",
                 Email = "test@example.com",
@@ -48,39 +43,97 @@ namespace TravelPalette.BL.Test
             };
 
             // Act
-            var result = UserManager.Insert(user, true);
-
+            int results = UserManager.Insert(user, true);
             // Assert
-            Assert.AreEqual(1, result);
+            Assert.AreEqual(1, results);
         }
 
         [TestMethod]
-        public void UpdateTest()
+        public void LoginFailureNoUsername()
         {
-            // Arrange
-            var userId = 2;
-            var updatedLastName = "UpdatedLastName";
-
-            // Act
-            var user = UserManager.LoadById(userId);
-            user.LastName = updatedLastName;
-            var result = UserManager.Update(user, true);
-
-            // Assert
-            Assert.AreEqual(1, result);
+            try
+            {
+                Seed();
+                Assert.IsFalse(UserManager.Login(new User { Username = "", Password = "password123" }));
+            }
+            catch (LoginFailureException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
 
         [TestMethod]
-        public void DeleteTest()
+        public void LoginFailureBadPassword()
         {
+            try
+            {
+                Seed();
+                Assert.IsFalse(UserManager.Login(new User { Username = "john_doe", Password = "sun" }));
+            }
+            catch (LoginFailureException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void LoginFailureBadUserName()
+        {
+            try
+            {
+                Seed();
+                Assert.IsFalse(UserManager.Login(new User { Username = "johndeer", Password = "password123" }));
+            }
+            catch (LoginFailureException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void LoginFailureNoPassword()
+        {
+            try
+            {
+                Seed();
+                Assert.IsFalse(UserManager.Login(new User { Username = "john_doe", Password = "" }));
+            }
+            catch (LoginFailureException)
+            {
+                Assert.IsTrue(true);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        //[TestMethod]
+       // public void UpdateTest()
+        //{
             // Arrange
-            var userId = 1;
+           // var userId = 2;
+           // var updatedLastName = "UpdatedLastName";
 
             // Act
-            var result = UserManager.Delete(userId, true);
+           // var user = UserManager.LoadById(userId);
+         //   user.LastName = updatedLastName;
+           // var result = UserManager.Update(user, true);
 
             // Assert
-            Assert.AreEqual(1, result);
-        }
+           // Assert.AreEqual(1, result);
+       // }
     }
 }

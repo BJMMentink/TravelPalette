@@ -2,9 +2,10 @@
     using System.Text;
     using TravelPalette.BL.Models;
     using TravelPalette.PL;
+    using Microsoft.EntityFrameworkCore.Storage;
 
-    namespace TravelPalette.BL
-    {
+namespace TravelPalette.BL
+{
         //bmb added
         public class LoginFailureException : Exception
         {
@@ -29,7 +30,25 @@
                 }
             }
 
-            public static int Insert(User user, bool rollback = false)
+        //bmb added/updated
+        public static int DeleteAll(int id, bool rollback = false)
+        {
+            try
+            {
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                {
+                    dc.tblUsers.RemoveRange(dc.tblUsers.ToList());
+                    return dc.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public static int Insert(User user, bool rollback = false)
             {
                 try
                 {
@@ -52,7 +71,7 @@
                         user.Id = entity.Id;
 
                         dc.tblUsers.Add(entity);
-                        results += dc.SaveChanges();
+                        results = dc.SaveChanges();
 
                         if (rollback) transaction.Rollback();
                     }
@@ -102,26 +121,47 @@
                 }
             }
 
-            //bmb added/updated
-            public static int Delete(int id, bool rollback = false)
+        //bmb updated
+        public static List<User> Load()
+        {
+            try
             {
-                try
-                {
-                    using (TravelPaletteEntities dc = new TravelPaletteEntities())
-                    {
-                        dc.tblUsers.RemoveRange(dc.tblUsers.ToList());
-                        return dc.SaveChanges();
-                    }
-                }
-                catch (Exception)
-                {
+                List<User> list = new List<User>();
 
-                    throw;
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                {
+                    (from u in dc.tblUsers
+                     select new
+                     {
+                         u.Id,
+                         u.FirstName,
+                         u.LastName,
+                         u.Username,
+                         u.Password,
+                         u.Email,
+                     })
+                     .ToList()
+                     .ForEach(user => list.Add(new User
+                     {
+                         Id = user.Id,
+                         FirstName = user.FirstName,
+                         LastName = user.LastName,
+                         Username = user.Username,
+                         Email = user.Email,
+                         Password = GetHash(user.Password),
+                     }));
                 }
+                return list;
             }
+            catch (Exception)
+            {
 
-            //bmb updated
-            public static User LoadById(int id)
+                throw;
+            }
+        }
+
+        //bmb updated
+        public static User LoadById(int id)
             {
                 try
                 {
@@ -158,45 +198,6 @@
                         }
 
                     }
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-            }
-
-            //bmb updated
-            public static List<User> Load()
-            {
-                try
-                {
-                    List<User> list = new List<User>();
-
-                    using (TravelPaletteEntities dc = new TravelPaletteEntities())
-                    {
-                        (from u in dc.tblUsers
-                         select new
-                         {
-                             u.Id,
-                             u.FirstName,
-                             u.LastName,
-                             u.Username,
-                             u.Password,
-                             u.Email,
-                         })
-                         .ToList()
-                         .ForEach(user => list.Add(new User
-                         {
-                             Id = user.Id,
-                             FirstName = user.FirstName,
-                             LastName = user.LastName,
-                             Username = user.Username,
-                             Email = user.Email,
-                             Password = GetHash(user.Password),
-                         }));
-                    }
-                    return list;
                 }
                 catch (Exception)
                 {
@@ -296,4 +297,4 @@
                 }
             }
         }
-    }
+}

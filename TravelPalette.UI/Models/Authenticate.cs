@@ -1,5 +1,6 @@
 ﻿using TravelPalette.BL.Models;
 using TravelPalette.UI.Extensions;
+using TravelPalette.UI.Models;
 
 namespace TravelPalette.UI.Models
 {

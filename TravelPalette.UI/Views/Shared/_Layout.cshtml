@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,9 +73,9 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             @{
-                               // TravelPalette.BL.UserManager.Seed();  // calling the seed
-                               // var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
-                                //if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
+                                TravelPalette.BL.UserManager.Seed();  // calling the seed
+                                var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
+                                if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
                             }
                             <a class="nav-link text-light"></a>
                         </li>
