@@ -101,7 +101,7 @@ namespace TravelPalette.BL
                         {
                             entity.Username = user.Username;
                             entity.Password = GetHash(user.Password);  //bmb added Gethash
-                            entity.Email = user.Email;
+                            entity.Email= user.Email;
                             entity.FirstName = user.FirstName;
                             entity.LastName = user.LastName;
                             results = dc.SaveChanges();
@@ -272,7 +272,8 @@ namespace TravelPalette.BL
                             Username = "john_doe",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "password123"  
+                            Password = "password123",
+                            Email = "john.doe@example.com"
                         };
                         Insert(user);
 
@@ -281,7 +282,8 @@ namespace TravelPalette.BL
                             Username = "jane_smith",
                             FirstName = "Jane",
                             LastName = "Smith",
-                            Password = "letmein"
+                            Password = "letmein",
+                            Email = "jane.smith@example.com"
                         };
                         Insert(user);
 
@@ -290,10 +292,11 @@ namespace TravelPalette.BL
                             Username = "bob_johnson",
                             FirstName = "Bob",
                             LastName = "Johnson",
-                            Password = "securepassword"
+                            Password = "securepassword",
+                            Email = "bob.johnson@example.com"
                         };
                         Insert(user);
-                }
+                    }
                 }
             }
         }
