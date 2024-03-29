@@ -269,22 +269,31 @@ namespace TravelPalette.BL
                     {
                         User user = new User
                         {
-                            Username = "travel",
-                            FirstName = "Default",
-                            LastName = "User",
-                            Password = "palette"
+                            Username = "john_doe",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Password = "password123"  
                         };
                         Insert(user);
 
                         user = new User
                         {
-                            Username = "school",
-                            FirstName = "User",
-                            LastName = "Default",
-                            Password = "project"
+                            Username = "jane_smith",
+                            FirstName = "Jane",
+                            LastName = "Smith",
+                            Password = "letmein"
                         };
                         Insert(user);
-                    }
+
+                        user = new User
+                        {
+                            Username = "bob_johnson",
+                            FirstName = "Bob",
+                            LastName = "Johnson",
+                            Password = "securepassword"
+                        };
+                        Insert(user);
+                }
                 }
             }
         }

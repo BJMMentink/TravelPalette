@@ -11,8 +11,9 @@ namespace TravelPalette.BL.Test
         public void LoginSuccessfulTest()
         {
             Seed();
-            Assert.IsTrue(UserManager.Login(new User { Username = "travel", Password = "palette" }));
-            Assert.IsTrue(UserManager.Login(new User { Username = "school", Password = "project" }));
+            Assert.IsTrue(UserManager.Login(new User { Username = "john_doe", Password = "password123" }));
+            Assert.IsTrue(UserManager.Login(new User { Username = "jane_smith", Password = "letmein" }));
+            Assert.IsTrue(UserManager.Login(new User { Username = "bob_johnson", Password = "securepassword" }));
         }
 
         public void Seed()
@@ -53,7 +54,7 @@ namespace TravelPalette.BL.Test
             try
             {
                 Seed();
-                Assert.IsFalse(UserManager.Login(new User { Username = "", Password = "palette" }));
+                Assert.IsFalse(UserManager.Login(new User { Username = "", Password = "password123" }));
             }
             catch (LoginFailureException)
             {
@@ -71,7 +72,7 @@ namespace TravelPalette.BL.Test
             try
             {
                 Seed();
-                Assert.IsFalse(UserManager.Login(new User { Username = "travel", Password = "food" }));
+                Assert.IsFalse(UserManager.Login(new User { Username = "john_doe", Password = "food" }));
             }
             catch (LoginFailureException)
             {
@@ -89,7 +90,7 @@ namespace TravelPalette.BL.Test
             try
             {
                 Seed();
-                Assert.IsFalse(UserManager.Login(new User { Username = "traveler", Password = "palette" }));
+                Assert.IsFalse(UserManager.Login(new User { Username = "johndoe", Password = "password123" }));
             }
             catch (LoginFailureException)
             {
@@ -107,7 +108,7 @@ namespace TravelPalette.BL.Test
             try
             {
                 Seed();
-                Assert.IsFalse(UserManager.Login(new User { Username = "travel", Password = "" }));
+                Assert.IsFalse(UserManager.Login(new User { Username = "john_doe", Password = "" }));
             }
             catch (LoginFailureException)
             {
