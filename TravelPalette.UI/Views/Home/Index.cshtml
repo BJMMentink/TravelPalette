@@ -2,14 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-<!DOCTYPE html>
-<html lang='en'>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset='utf-8' />
-    <title>Points on a map</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css' rel='stylesheet' />
+    <meta charset="utf-8" />
+    <title>Demo: Add points to a web map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css"
+          rel="stylesheet" />
     <style>
         body {
             margin: 0;
@@ -25,47 +26,33 @@
     </style>
 </head>
 <body>
-    <div id='map'></div>
+    <div id="map"></div>
     <script>
-        // The value for 'accessToken' begins with 'pk...'
         mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
         const map = new mapboxgl.Map({
             container: 'map',
-            // Replace YOUR_STYLE_URL with your style URL.
-            style: 'mapbox://styles/leumas1231/clt43l72n02en01qj7nmoh5cx',
-            center: [-87.661557, 41.893748],
+            style: 'mapbox://styles/leumas1231/clt967hee00t201qp8yc3g4aq/draft',
+            center: [-88.407059, 44.261614],
             zoom: 10.7
         });
 
-        // Code from the next step will go here.
-
-        /*
-        Add an event listener that runs
-        when a user clicks on the map element.
-        */
         map.on('click', (event) => {
-            // If the user clicked on one of your markers, get its information.
             const features = map.queryRenderedFeatures(event.point, {
-                layers: ['appleton-wi'] // replace with your layer name
+                layers: ['bar', 'restaurant','parking','cafe','theatre', 'bank','church','library','fastfood','gas','icecream','postoffice']
             });
             if (!features.length) {
                 return;
             }
             const feature = features[0];
 
-            // Code from the next step will go here.
-            
-            /* 
-    Create a popup, specify its options 
-    and properties, and add it to the map.
-  */
-const popup = new mapboxgl.Popup({ offset: [0, -15] })
-  .setLngLat(feature.geometry.coordinates)
-  .setHTML(
-    `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
-  )
-  .addTo(map);
+            const popup = new mapboxgl.Popup({ offset: [0, -15] })
+                .setLngLat(feature.geometry.coordinates)
+                .setHTML(
+                    `<h3>${feature.properties.name}</h3><p>${feature.properties.cuisine}</p>`
+                )
+                .addTo(map);
         });
     </script>
 </body>
 </html>
+
