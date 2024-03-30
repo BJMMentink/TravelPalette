@@ -38,18 +38,31 @@
 
         map.on('click', (event) => {
             const features = map.queryRenderedFeatures(event.point, {
-                layers: ['bar', 'restaurant','parking','cafe','theatre', 'bank','church','library','fastfood','gas','icecream','postoffice']
+                layers: ['bar', 'restaurant', 'parking', 'cafe', 'theatre', 'bank', 'church', 'library', 'fastfood', 'gas', 'icecream', 'postoffice']
             });
             if (!features.length) {
                 return;
             }
             const feature = features[0];
-
+            let popupContent = `<h3>${feature.properties.name}</h3>`;
+            if (feature.properties.website) {
+                popupContent += `<p>Website: <a href="${feature.properties.website}" target="_blank">${feature.properties.website}</a></p>`;
+            }
+            if (feature.properties['addr:street']) {
+                popupContent += `<p>Address: ${feature.properties['addr:street']}, ${feature.properties['addr:housenumber']}</p>`;
+            }
+            if (feature.properties['addr:city']) {
+                popupContent += `<p>${feature.properties['addr:city']}, ${feature.properties['addr:state']} ${feature.properties['addr:postcode']}</p>`;
+            }
+            if (feature.properties.cuisine && feature.layer.id === 'restaurant') {
+                const capitalizedCuisine = feature.properties.cuisine.charAt(0).toUpperCase() + feature.properties.cuisine.slice(1);
+                popupContent += `<p>Cuisine: ${capitalizedCuisine}</p>`;
+                // Add hyperlink to another page
+                popupContent += `<p><a href="/Home/Test" target="_blank">More Info</a></p>`;
+            }
             const popup = new mapboxgl.Popup({ offset: [0, -15] })
                 .setLngLat(feature.geometry.coordinates)
-                .setHTML(
-                    `<h3>${feature.properties.name}</h3><p>${feature.properties.cuisine}</p>`
-                )
+                .setHTML(popupContent)
                 .addTo(map);
         });
     </script>
