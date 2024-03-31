@@ -59,7 +59,11 @@
                 popupContent += `<p>Cuisine: ${capitalizedCuisine}</p>`;
                 // Add hyperlink to another page
                 popupContent += `<p><a href="/Home/Test" target="_blank">More Info</a></p>`;
+
+                
+                
             }
+            popupContent += `<p><a href="/Home/AddToTrip/${feature.id}" target="_blank">Add To Trip</a></p>`;
             const popup = new mapboxgl.Popup({ offset: [0, -15] })
                 .setLngLat(feature.geometry.coordinates)
                 .setHTML(popupContent)
