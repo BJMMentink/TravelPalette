@@ -23,6 +23,40 @@
             bottom: 0;
             width: 100%;
         }
+
+        .mapboxgl-popup-content {
+            max-width: 300px; 
+            overflow-wrap: break-word;
+            padding: 10px;
+            line-height: 1.5;
+        }
+
+        .mapboxgl-popup {
+            max-width: 300px;
+            font-size: 14px;
+        }
+
+        .mapboxgl-popup h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .mapboxgl-popup p {
+            margin: 0;
+            color: #666;
+        }
+
+        .mapboxgl-popup a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .mapboxgl-popup a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -38,7 +72,7 @@
 
         map.on('click', (event) => {
             const features = map.queryRenderedFeatures(event.point, {
-                layers: ['bar', 'restaurant', 'parking', 'cafe', 'theatre', 'bank', 'church', 'library', 'fastfood', 'gas', 'icecream', 'postoffice']
+                layers: ['bar', 'restaurant', 'cafe', 'theatre', 'bank', 'church', 'library', 'fastfood', 'gas', 'icecream', 'postoffice']
             });
             if (!features.length) {
                 return;
