@@ -88,21 +88,26 @@
             if (feature.properties['addr:city']) {
                 popupContent += `<p>${feature.properties['addr:city']}, ${feature.properties['addr:state']} ${feature.properties['addr:postcode']}</p>`;
             }
-            if (feature.properties.cuisine && feature.layer.id === 'restaurant') {
+            if (feature.properties.cuisine) {
                 const capitalizedCuisine = feature.properties.cuisine.charAt(0).toUpperCase() + feature.properties.cuisine.slice(1);
                 popupContent += `<p>Cuisine: ${capitalizedCuisine}</p>`;
-                // Add hyperlink to another page
-                popupContent += `<p><a href="/Home/Test" target="_blank">More Info</a></p>`;
-
-                
-                
+                popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
             }
-            popupContent += `<p><a href="/Home/AddToTrip/${feature.id}" target="_blank">Add To Trip</a></p>`;
+
+            popupContent += `<p><a href="/Home/AddToTrip/${feature.properties.id}" target="_blank">Add To Trip</a></p>`;
             const popup = new mapboxgl.Popup({ offset: [0, -15] })
                 .setLngLat(feature.geometry.coordinates)
                 .setHTML(popupContent)
                 .addTo(map);
         });
+        function showMoreInfo(feature) {
+            // Serialize the feature object as JSON and encode it for URL
+            const featureJson = encodeURIComponent(JSON.stringify(feature));
+            // Redirect the user to the "Test" page with the serialized feature object as a query parameter
+            window.location.href = `/Home/Test?feature=${featureJson}`;
+        }
+
+
     </script>
 </body>
 </html>

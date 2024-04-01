@@ -3,57 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Amenities</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 5px;
-        }
-    </style>
+    <title>Test Page</title>
 </head>
 <body>
-    <h1>List of Amenities</h1>
-    <ul id="amenities-list">
-        <!-- Amenities will be dynamically added here -->
-    </ul>
+    <h1>Test Page</h1>
+
+    <div id="feature-info"></div>
 
     <script>
-        // Load the JSON file
-        fetch('../Data/style.json')
-            .then(response => response.json())
-            .then(data => {
-                // Extract amenity data
-                const amenities = new Set();
-                data.layers.forEach(layer => {
-                    if (layer.type === 'symbol') { // Assuming amenities are stored in symbol layers
-                        layer['source-layer'] === 'restaurant' && layer.layout && layer.layout['text-field'] && amenities.add(layer.layout['text-field']);
-                    }
-                });
+        // Function to extract query parameters from URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
 
-                // Function to dynamically generate the list items
-                function generateListItems(data) {
-                    const list = document.getElementById('amenities-list');
-                    data.forEach(item => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = item;
-                        list.appendChild(listItem);
-                    });
-                }
-
-                // Call the function to generate list items
-                generateListItems(Array.from(amenities));
-            })
-            .catch(error => {
-                console.error('Error fetching style data:', error);
-            });
+        // Retrieve the serialized feature object from the URL
+        var serializedFeature = getParameterByName('feature');
+        if (serializedFeature) {
+            // Parse the serialized feature object back to JSON
+            var feature = JSON.parse(decodeURIComponent(serializedFeature));
+            // Display all properties of the feature on the page
+            var featureInfoElement = document.getElementById('feature-info');
+            var html = '<h2>Feature Information</h2><ul>';
+            for (var key in feature.properties) {
+                html += `<li><strong>${key}:</strong> ${feature.properties[key]}</li>`;
+            }
+            html += '</ul>';
+            featureInfoElement.innerHTML = html;
+        } else {
+            // Handle case when feature object is not provided in the URL
+            var featureInfoElement = document.getElementById('feature-info');
+            featureInfoElement.innerHTML = '<p>No feature data provided.</p>';
+        }
     </script>
 </body>
 </html>
