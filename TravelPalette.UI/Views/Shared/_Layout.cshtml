@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    <header>@* 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm topnavbar-light bg-white">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
@@ -26,22 +26,13 @@
                 </button>
                 <div class="topnavbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Create">Create Account</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
-                        </li>
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> *@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TravelPalette.UI</a>
+                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TravelPalette.UI</a> *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -49,35 +40,53 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark rounded " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Shop" asp-action="Index">Shop</a>
+                            <a class="nav-link text-dark rounded " asp-area="" asp-controller="Shop" asp-action="Index">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Eat" asp-action="Index">Eat</a>
+                            <a class="nav-link text-dark rounded " asp-area="" asp-controller="Eat" asp-action="Index">Eat</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Stay" asp-action="Index">Stay</a>
+                            <a class="nav-link text-dark rounded " asp-area="" asp-controller="Stay" asp-action="Index">Stay</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="Fun" asp-action="Index">Fun</a>
+                            <a class="nav-link text-dark rounded " asp-area="" asp-controller="Fun" asp-action="Index">Fun</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark " asp-area="" asp-controller="More" asp-action="Index">More</a>
+                            <a class="nav-link text-dark rounded " asp-area="" asp-controller="More" asp-action="Index">More</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li> *@
+                    </ul>
+                    <ul class="navbar-nav">
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             @{
                                 TravelPalette.BL.UserManager.Seed();  // calling the seed
                                 var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
-                                if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
+                                bool logoutHidden = true;
+                                bool loginHidden = false;
+                                if (FullName != null) 
+                                {
+                                    FullName = FullName.Replace("\"", "");    //string manipulation
+                                    if (FullName != string.Empty ? logoutHidden = false : logoutHidden = true); // If theres no name then Logout will be hidden 
+                                    loginHidden = !logoutHidden;                                                // Login and create account will show based on if Logout is hidden
+                                }
                             }
-                            <a class="nav-link text-dark">@FullName</a>
+                            <a class="nav-link text-dark rounded">@FullName</a>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Create" hidden="@loginHidden">Create Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Login" hidden="@loginHidden">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Logout" hidden="@logoutHidden">Logout</a>
+                            </li>
                         </li>
                     </ul>
                 </div>
