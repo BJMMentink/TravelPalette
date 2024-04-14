@@ -18,7 +18,25 @@ namespace TravelPalette.UI.Controllers
             return View();
         }
 
+        public IActionResult Shop()
+        {
+            return View("MapAndList");
+        }
 
+        public IActionResult Eat()
+        {
+            return View("MapAndList");
+        }
+
+        public IActionResult Stay()
+        {
+            return View("MapAndList");
+        }
+
+        public IActionResult Fun()
+        {
+            return View("MapAndList");
+        }
 
         public IActionResult Privacy()
         {

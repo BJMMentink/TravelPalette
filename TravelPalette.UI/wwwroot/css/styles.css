@@ -62,7 +62,7 @@ nav ul li {
         cursor: pointer;
     }
 
-.container-list {
+.list-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -71,13 +71,6 @@ nav ul li {
     overflow-y: auto; /* Scrolling */
 }
 
-.container {
-    width: 100%;
-    min-height: 16em;
-    background-color: #ccc;
-    box-sizing: border-box;
-    text-align: center;
-}
 
 .listonly {
     height: 70%;
@@ -91,13 +84,22 @@ nav ul li {
 .mapandlist {
     display: flex;
     align-items: flex-start;
-    padding: 1rem;
+    padding: .5rem;
 }
 
 .map-container {
-    width: 60vw;
+    width: 100vw;
     height: 80vh;
     background-color: #222;
+}
+
+.info-container {
+    background-color:bisque;
+    margin:5px;
+    padding: 5px;
+    min-height: 10vh;
+    width: 100%;
+
 }
 
 .login, .nav {
