@@ -1,0 +1,5 @@
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=TravelPalette.DB;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -Context TravelPaletteEntities -UseDatabaseNames -force
