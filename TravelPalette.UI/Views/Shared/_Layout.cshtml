@@ -14,9 +14,9 @@
     <header>
         <div class="login">
             <div id="logo">Logo</div>
-            <div id="username">Username</div>
+            <div id="username"><a>Username</a></div>
             <div id="login">
-                Login
+                <a>Login</a>
                 @{
                     TravelPalette.BL.UserManager.Seed();  // calling the seed
                     var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
@@ -38,15 +38,11 @@
         </div>
     </header>
     <div class="container">
-        <div class="col-md-9 main body-content rounded-top">
-           <div class="header rounded-top p-1">
-               <h4>@ViewBag.Title</h4>
-           </div>
-           <main role="main" class="pb-3">
+           <main>
            <div class="text-danger m-2">@ViewBag.Error</div>
             @RenderBody()
            </main>
-        </div>
+
     </div>
 
     <footer class="border-top footer text-muted">

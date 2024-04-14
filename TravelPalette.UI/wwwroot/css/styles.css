@@ -9,7 +9,6 @@ header {
     background-color: #666;
     color: #fff;
     text-align: center;
-    size: 1em;
     width: 100%;
 }
 
@@ -34,6 +33,73 @@ footer {
     padding-left: 20px;
 }
 
+nav ul li {
+    flex-grow: 1;
+    display: flex;
+}
+
+    nav ul li a {
+        text-decoration: none;
+        font-size: 1.5rem;
+        color: black;
+    }
+
+    nav ul li:nth-child(3) a {
+        font-size: 3rem;
+    }
+
+.buttons {
+    margin-top: 10px;
+}
+
+    .buttons button {
+        padding: .5rem 1rem;
+        margin-right: 5%;
+        margin-left: 5%;
+        background-color: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+.container-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-height: 70%;
+    overflow-y: auto; /* Scrolling */
+}
+
+.container {
+    width: 100%;
+    min-height: 16em;
+    background-color: #ccc;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.listonly {
+    height: 70%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #999;
+}
+
+.mapandlist {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+}
+
+.map-container {
+    width: 60vw;
+    height: 80vh;
+    background-color: #222;
+}
+
 .login, .nav {
     border: 1px solid black;
     width: 100%;
@@ -43,6 +109,22 @@ footer {
     background-color: #888;
     min-height: 12vh;
 }
+
+.login-container {
+    max-width: 25em;
+    min-width: 40vw;
+    text-align: center;
+}
+
+.login-form {
+    background-color: #777;
+    padding: 20px;
+}
+
+    .login-form input {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 
 .nav {
     background-color: #777;
@@ -57,22 +139,6 @@ nav ul {
     justify-content: center;
     align-items: center;
     list-style-type: none;
-}
-
-nav ul li {
-    flex-grow: 1;
-    display: flex;
-
-}
-
-nav ul li a {
-    text-decoration: none;
-    font-size: 1.5rem; 
-    color: black;
-}
-
-nav ul li:nth-child(3) a {
-    font-size: 3rem;
 }
 
 #logo {
@@ -118,72 +184,6 @@ nav ul li:nth-child(3) a {
     margin-left: 10px;
 }
 
-.login-container {
-    max-width: 25em;
-    min-width: 40vw;
-    text-align: center;
-}
 
-.login-form {
-    background-color: #777;
-    padding: 20px;
-}
 
-.login-form input {
-    width: 100%;
-    margin-bottom: 20px;
-}
 
-.buttons {
-    margin-top: 10px;
-}
-
-.buttons button {
-    padding: .5rem 1rem;
-    margin-right: 5%;
-    margin-left: 5%;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.listonly {
-    height: 70%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background-color: #999;
-}
-
-.container-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    max-height: 70%;
-    overflow-y: auto; /* Scrolling */
-}
-
-.container {
-    width: calc(50% - 20px);
-    min-height: 16em;
-    background-color: #ccc;
-    margin: 10px;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.mapandlist {
-    display: flex;
-    align-items: flex-start;
-    padding: 1rem;
-}
-
-.map-container {
-    width: 60vw;
-    height: 80vh;
-    background-color: #222;
-}
