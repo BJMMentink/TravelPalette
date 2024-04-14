@@ -87,5 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.xml" />
+    <None Include="remote.publish.xml" />
   </ItemGroup>
 </Project>

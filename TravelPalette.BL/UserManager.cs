@@ -1,174 +1,127 @@
-﻿using TravelPalette.BL.Models;
+﻿    using System.Security.Cryptography;
+    using System.Text;
+    using TravelPalette.BL.Models;
+    using TravelPalette.PL;
+    using Microsoft.EntityFrameworkCore.Storage;
 
 namespace TravelPalette.BL
 {
-    public static class UserManager
-    {
-        public static int Insert(string userName,
-                                 string password,
-                                 string email,
-                                 string firstName,
-                                 string lastName,
-                                 ref int id,
-                                 bool rollback = false)
+        //bmb added
+        public class LoginFailureException : Exception
         {
-            try
+            public LoginFailureException() : base("Cannot log in with these credentials. Your IP Address has been saved.")
             {
-                User user = new User
-                {
-                    Username = userName,
-                    Password = password,
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                };
-                int results = Insert(user, rollback);
 
-                // IMPORTANT - BACKFILL THE REFERENCE ID
-                id = user.Id;
-
-                return results;
             }
-            catch (Exception)
+            public LoginFailureException(string message) : base(message)
             {
 
-                throw;
             }
         }
-        public static int Insert(User user, bool rollback = false)
+        public static class UserManager
         {
-            try
+            //bmb added
+            public static string GetHash(string password)
             {
-                int results = 0;
-                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                using (var hasher = SHA1.Create())
                 {
-                    IDbContextTransaction transaction = null;
-                    if (rollback) transaction = dc.Database.BeginTransaction();
-
-                    tblUser entity = new tblUser();
-
-                    entity.Id = dc.tblUsers.Any() ? dc.tblUsers.Max(u => u.Id) + 1 : 1;
-                    entity.Username = user.Username;
-                    entity.Password = user.Password;
-                    entity.Email = user.Email;
-                    entity.FirstName = user.FirstName;
-                    entity.LastName = user.LastName;
-
-                    // IMPORTANT - BACK FILL THE ID
-                    user.Id = entity.Id;
-
-                    dc.tblUsers.Add(entity);
-                    results += dc.SaveChanges();
-
-                    if (rollback) transaction.Rollback();
+                    var hashbytes = Encoding.UTF8.GetBytes(password);
+                    return Convert.ToBase64String(hasher.ComputeHash(hashbytes));
                 }
-
-                return results;
             }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
-        public static int Update(User user, bool rollback = false)
-        {
-            try
-            {
-                int results = 0;
-                using (TravelPaletteEntities dc = new TravelPaletteEntities())
-                {
-                    IDbContextTransaction transaction = null;
-                    if (rollback) transaction = dc.Database.BeginTransaction();
-
-                    // Get the row we are trying to update
-                    tblUser entity = dc.tblUsers.FirstOrDefault(u => u.Id == user.Id);
-                    if (entity != null)
-                    {
-                        entity.Username = user.Username;
-                        entity.Password = user.Password;
-                        entity.Email = user.Email;
-                        entity.FirstName = user.FirstName;
-                        entity.LastName = user.LastName;
-                        results = dc.SaveChanges();
-                    }
-                    else
-                    {
-                        throw new Exception("Row does not exist");
-                    }
-                    if (rollback) transaction.Rollback();
-                }
-                return results;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+        //bmb added/updated
         public static int Delete(int id, bool rollback = false)
         {
             try
             {
-                int results = 0;
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    IDbContextTransaction transaction = null;
-                    if (rollback) transaction = dc.Database.BeginTransaction();
+                    dc.tblUsers.RemoveRange(dc.tblUsers.ToList());
+                    return dc.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
 
-                    // Get the row we are trying to update
-                    tblUser entity = dc.tblUsers.FirstOrDefault(u => u.Id == id);
-                    if (entity != null)
+                throw;
+            }
+        }
+
+        public static int Insert(User user, bool rollback = false)
+            {
+                try
+                {
+                    int results = 0;
+                    using (TravelPaletteEntities dc = new TravelPaletteEntities())
                     {
-                        dc.tblUsers.Remove(entity);
+                        IDbContextTransaction transaction = null;
+                        if (rollback) transaction = dc.Database.BeginTransaction();
+
+                        tblUser entity = new tblUser();
+
+                        entity.Id = dc.tblUsers.Any() ? dc.tblUsers.Max(s => s.Id) + 1 : 1;
+                        entity.Username = user.Username;
+                        entity.Password = GetHash(user.Password); //bmb added Gethash
+                        entity.Email = user.Email;
+                        entity.FirstName = user.FirstName;
+                        entity.LastName = user.LastName;
+
+                        // IMPORTANT - BACK FILL THE ID
+                        user.Id = entity.Id;
+
+                        dc.tblUsers.Add(entity);
                         results = dc.SaveChanges();
-                    }
-                    else
-                    {
-                        throw new Exception("Row does not exist");
-                    }
-                    if (rollback) transaction.Rollback();
-                }
-                return results;
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
-        public static User LoadById(int id)
-        {
-            try
-            {
-                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                        if (rollback) transaction.Rollback();
+                    }
+
+                    return results;
+                }
+                catch (Exception)
                 {
-                    tblUser entity = dc.tblUsers.FirstOrDefault(u => u.Id == id);
 
-                    if (entity != null)
-                    {
-                        return new User
-                        {
-                            Id = entity.Id,
-                            Username = entity.Username,
-                            Password = entity.Password,
-                            FirstName = entity.FirstName,
-                            LastName = entity.LastName,
-                            Email = entity.Email
-                        };
-                    }
-                    else
-                    {
-                        throw new Exception();
-                    }
+                    throw;
                 }
             }
-            catch (Exception)
-            {
 
-                throw;
+            public static int Update(User user, bool rollback = false)
+            {
+                try
+                {
+                    int results = 0;
+                    using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                    {
+                        IDbContextTransaction transaction = null;
+                        if (rollback) transaction = dc.Database.BeginTransaction();
+
+                        // Get the row we are trying to update
+                        tblUser entity = dc.tblUsers.FirstOrDefault(s => s.Id == user.Id);
+                        if (entity != null)
+                        {
+                            entity.Username = user.Username;
+                            entity.Password = GetHash(user.Password);  //bmb added Gethash
+                            entity.Email= user.Email;
+                            entity.FirstName = user.FirstName;
+                            entity.LastName = user.LastName;
+                            results = dc.SaveChanges();
+                        }
+                        else
+                        {
+                            throw new Exception("Row does not exist");
+                        }
+                        if (rollback) transaction.Rollback();
+                    }
+                    return results;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
-        }
+
+        //bmb updated
         public static List<User> Load()
         {
             try
@@ -181,23 +134,22 @@ namespace TravelPalette.BL
                      select new
                      {
                          u.Id,
-                         u.Username,
-                         u.Password,
                          u.FirstName,
                          u.LastName,
-                         u.Email
+                         u.Username,
+                         u.Password,
+                         u.Email,
                      })
                      .ToList()
                      .ForEach(user => list.Add(new User
                      {
                          Id = user.Id,
-                         Username = user.Username,
-                         Password = user.Password,
                          FirstName = user.FirstName,
                          LastName = user.LastName,
-                         Email = user.Email
+                         Username = user.Username,
+                         Email = user.Email,
+                         Password = GetHash(user.Password),
                      }));
-
                 }
                 return list;
             }
@@ -207,5 +159,145 @@ namespace TravelPalette.BL
                 throw;
             }
         }
-    }
+
+        //bmb updated
+        public static User LoadById(int id)
+            {
+                try
+                {
+                    using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                    {
+                        var entity = (from u in dc.tblUsers
+                                      select new
+                                      {
+                                          u.Id,
+                                          u.FirstName,
+                                          u.LastName,
+                                          u.Username,
+                                          u.Password,
+                                          u.Email,
+                                      })
+
+                                         .FirstOrDefault();
+
+                        if (entity != null)
+                        {
+                            return new User
+                            {
+                                Id = entity.Id,
+                                FirstName = entity.FirstName,
+                                LastName = entity.LastName,
+                                Username = entity.Username,
+                                Email = entity.Email,
+                                Password = GetHash(entity.Password),
+                            };
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+            //bmb added
+            public static bool Login(User user)
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(user.Username))
+                    {
+                        if (!string.IsNullOrEmpty(user.Password))
+                        {
+                            using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                            {
+                                tblUser tblUser = dc.tblUsers.FirstOrDefault(u => u.Username == user.Username);
+                                if (tblUser != null)
+                                {
+                                    if (tblUser.Password == GetHash(user.Password))
+                                    {
+                                        //login successful
+                                        user.Id = tblUser.Id;
+                                        user.FirstName = tblUser.FirstName;
+                                        user.LastName = tblUser.LastName;
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        throw new LoginFailureException();
+                                    }
+                                }
+                                else
+                                {
+                                    throw new LoginFailureException("Username was not found.");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new LoginFailureException("Password was not set.");
+                        }
+                    }
+                    else
+                    {
+                        throw new LoginFailureException("User was not set.");
+                    }
+                }
+                catch (LoginFailureException)
+                {
+                    throw;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            //bmb added
+            public static void Seed()
+            {
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                {
+                    //"if i don't have any make some"
+                    if (!dc.tblUsers.Any())
+                    {
+                        User user = new User
+                        {
+                            Username = "john_doe",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Password = "password123",
+                            Email = "john.doe@example.com"
+                        };
+                        Insert(user);
+
+                        user = new User
+                        {
+                            Username = "jane_smith",
+                            FirstName = "Jane",
+                            LastName = "Smith",
+                            Password = "letmein",
+                            Email = "jane.smith@example.com"
+                        };
+                        Insert(user);
+
+                        user = new User
+                        {
+                            Username = "bob_johnson",
+                            FirstName = "Bob",
+                            LastName = "Johnson",
+                            Password = "securepassword",
+                            Email = "bob.johnson@example.com"
+                        };
+                        Insert(user);
+                    }
+                }
+            }
+        }
 }
