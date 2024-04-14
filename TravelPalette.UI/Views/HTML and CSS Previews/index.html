@@ -11,7 +11,15 @@
         <div class="login">
             <div id="logo">Logo</div>
             <div id="username">Username</div>
-            <div id="login">Login</div>
+            <div id="login">
+                Login
+                @{
+                TravelPalette.BL.UserManager.Seed();  // calling the seed
+                var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
+                if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
+                }
+                <a class="nav-link text-dark">@FullName</a>
+            </div>
         </div>
         <div class="nav">
             <nav>

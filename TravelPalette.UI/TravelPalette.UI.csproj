@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TravelPalette.BL.Models\TravelPalette.BL.Models.csproj" />
     <ProjectReference Include="..\TravelPalette.BL\TravelPalette.BL.csproj" />
   </ItemGroup>
