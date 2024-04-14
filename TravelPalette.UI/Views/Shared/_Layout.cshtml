@@ -16,13 +16,16 @@
             <div id="logo">Logo</div>
             <div id="username"><a>Username</a></div>
             <div id="login">
-                <a>Login</a>
+                <a asp-area="" asp-controller="User" asp-action="Login">Login</a>
                 @{
                     TravelPalette.BL.UserManager.Seed();  // calling the seed
                     var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
                     if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
                 }
-                <a class="nav-link text-dark">@FullName</a>
+                <a>@FullName</a>
+            </div>
+            <div id="logout">
+                <a asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
             </div>
         </div>
         <div class="nav">
@@ -30,7 +33,7 @@
                 <ul>
                     <li><a href="#">Shop</a></li>
                     <li><a href="#">Eat</a></li>
-                    <li><a href="#">Travel Palette</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Travel Palette</a></li>
                     <li><a href="#">Stay</a></li>
                     <li><a href="#">Fun</a></li>
                 </ul>
