@@ -34,5 +34,13 @@ namespace TravelPalette.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public ActionResult AddToTrip(string id)
+        {
+            // Here you can write code to add the id to your database
+            // For demonstration, let's just return a simple response
+            return Content($"Added feature with ID {id} to trip!");
+        }
     }
 }
