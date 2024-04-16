@@ -91,6 +91,7 @@
             if (feature.properties.cuisine) {
                 const capitalizedCuisine = feature.properties.cuisine.charAt(0).toUpperCase() + feature.properties.cuisine.slice(1);
                 popupContent += `<p>Cuisine: ${capitalizedCuisine}</p>`;
+                // Need below to insert ID into database, to save trips
                 popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
             }
 
