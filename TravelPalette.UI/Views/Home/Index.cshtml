@@ -95,6 +95,7 @@
                 popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
             }
 
+            // Create pop up window to Add to Trip
             popupContent += `<p><a href="/Home/AddToTrip/${feature.properties.id}" target="_blank">Add To Trip</a></p>`;
             const popup = new mapboxgl.Popup({ offset: [0, -15] })
                 .setLngLat(feature.geometry.coordinates)
