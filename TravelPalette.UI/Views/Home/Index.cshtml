@@ -1,16 +1,11 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Demo: Add points to a web map</title>
+    <title>Demo: Add points to a web map with filtering</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js"></script>
-    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css"
-          rel="stylesheet" />
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <style>
         body {
             margin: 0;
@@ -24,50 +19,175 @@
             width: 100%;
         }
 
-        .mapboxgl-popup-content {
-            max-width: 300px; 
-            overflow-wrap: break-word;
-            padding: 10px;
-            line-height: 1.5;
+        .filter-group {
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            font-weight: 600;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+            border-radius: 3px;
+            width: 120px;
+            color: #fff;
         }
 
-        .mapboxgl-popup {
-            max-width: 300px;
-            font-size: 14px;
-        }
+            .filter-group input[type='checkbox']:first-child + label {
+                border-radius: 3px 3px 0 0;
+            }
 
-        .mapboxgl-popup h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #333;
-        }
+            .filter-group label:last-child {
+                border-radius: 0 0 3px 3px;
+                border: none;
+            }
 
-        .mapboxgl-popup p {
-            margin: 0;
-            color: #666;
-        }
+            .filter-group input[type='checkbox'] {
+                display: none;
+            }
 
-        .mapboxgl-popup a {
-            color: #007bff;
-            text-decoration: none;
-        }
+                .filter-group input[type='checkbox'] + label {
+                    background-color: #3386c0;
+                    display: block;
+                    cursor: pointer;
+                    padding: 10px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+                }
 
-        .mapboxgl-popup a:hover {
-            text-decoration: underline;
-        }
+                .filter-group input[type='checkbox'] + label {
+                    background-color: #3386c0;
+                    text-transform: capitalize;
+                }
 
+                    .filter-group input[type='checkbox'] + label:hover,
+                    .filter-group input[type='checkbox']:checked + label {
+                        background-color: #4ea0da;
+                    }
+
+                        .filter-group input[type='checkbox']:checked + label:before {
+                            content: '✔';
+                            margin-right: 5px;
+                        }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <nav id="filter-group" class="filter-group"></nav>
+
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
+
+        // This GeoJSON contains features that include an "icon"
+        // property. The value of the "icon" property corresponds
+        // to an image in the Mapbox Light style's sprite. (Note:
+        // the name of images is the value of the "icon" property
+        // + "-15".)
+        const places = {
+            'type': 'FeatureCollection',
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "id": "node/10021941017",
+                        "amenity": "restaurant",
+                        "cuisine": "mexican",
+                        "name": "Tipsy Taco"
+                    },
+                    "geometry": {
+                        "coordinates": [
+                            -88.416021,
+                            44.260872
+                        ],
+                        "type": "Point"
+                    },
+                    "id": "node/10021941017"
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "contact:website": "https://www.starbucks.com/store-locator/store/1040598/hilton-appleton-paper-valley-333-w-college-ave-appleton-wi-54911-us",
+                        "cuisine": "coffee_shop",
+                        "brand": "Starbucks",
+                        "name": "Starbucks",
+                        "brand:wikidata": "Q37158",
+                        "construction": "yes",
+                        "takeaway": "yes",
+                        "amenity": "cafe",
+                        "outdoor_seating": "no",
+                        "id": "node/10082473208",
+                        "official_name": "Starbucks Coffee"
+                    },
+                    "geometry": {
+                        "coordinates": [
+                            -88.409592,
+                            44.261592
+                        ],
+                        "type": "Point"
+                    },
+                    "id": "node/10082473208"
+                },
+            ]
+        };
+
+        const filterGroup = document.getElementById('filter-group');
         const map = new mapboxgl.Map({
             container: 'map',
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
             style: 'mapbox://styles/leumas1231/clt967hee00t201qp8yc3g4aq/draft',
             center: [-88.407059, 44.261614],
-            zoom: 10.7
+            zoom: 11.15
+        });
+
+        map.on('load', () => {
+            // Add a GeoJSON source containing place coordinates and information.
+            map.addSource('places', {
+                'type': 'geojson',
+                'data': places
+            });
+            const amenities = ['bar', 'restaurant', 'cafe', 'theatre', 'bank', 'church', 'library', 'fastfood', 'gas', 'icecream', 'postoffice'];
+
+            for (const feature of places.features) {
+                const symbol = feature.properties.amenity;
+                const layerID = `poi-${symbol}`;
+
+                // Add a layer for this symbol type if it hasn't been added already.
+                if (!map.getLayer(layerID)) {
+                    map.addLayer({
+                        'id': layerID,
+                        'type': 'symbol',
+                        'source': 'places',
+                        'layout': {
+                            // These icons are a part of the Mapbox Light style.
+                            // To view all images available in a Mapbox style, open
+                            // the style in Mapbox Studio and click the "Images" tab.
+                            // To add a new image to the style at runtime see
+                            // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+                            'icon-image': `${symbol}`,
+                            'icon-allow-overlap': true
+                        },
+                        'filter': ['==', 'icon', symbol]
+                    });
+
+                    // Add checkbox and label elements for the layer.
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.id = layerID;
+                    input.checked = true;
+                    filterGroup.appendChild(input);
+
+                    const label = document.createElement('label');
+                    label.setAttribute('for', layerID);
+                    label.textContent = symbol;
+                    filterGroup.appendChild(label);
+
+                    // When the checkbox changes, update the visibility of the layer.
+                    input.addEventListener('change', (e) => {
+                        map.setLayoutProperty(
+                            layerID,
+                            'visibility',
+                            e.target.checked ? 'visible' : 'none'
+                        );
+                    });
+                }
+            }
         });
 
         map.on('click', (event) => {
@@ -101,15 +221,6 @@
                 .setHTML(popupContent)
                 .addTo(map);
         });
-        function showMoreInfo(feature) {
-            // Serialize the feature object as JSON and encode it for URL
-            const featureJson = encodeURIComponent(JSON.stringify(feature));
-            // Redirect the user to the "Test" page with the serialized feature object as a query parameter
-            window.location.href = `/Home/Test?feature=${featureJson}`;
-        }
-
-
     </script>
 </body>
 </html>
-
