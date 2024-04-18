@@ -79,6 +79,8 @@
             }
             const feature = features[0];
             let popupContent = `<h3>${feature.properties.name}</h3>`;
+
+            // Look for if each feature exists
             if (feature.properties.website) {
                 popupContent += `<p>Website: <a href="${feature.properties.website}" target="_blank">${feature.properties.website}</a></p>`;
             }
@@ -95,11 +97,19 @@
                 popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
             }
 
+            // Added the location ID to the pop up
+            if (feature.properties["@@id"]) {
+                popupContent += `<p>Location ID: ${feature.properties['@@id']}</p>`;
+            }
+
             // Create pop up window to Add to Trip
-            popupContent += `<p><a href="/Home/AddToTrip/${feature.properties.id}" target="_blank">Add To Trip</a></p>`;
+            popupContent += `<p><a href="/Home/AddToTrip/${feature.properties['@@id']}" target="_blank">Add To Trip</a></p>`;
             const popup = new mapboxgl.Popup({ offset: [0, -15] })
+                // Set the placement of the mapbox
                 .setLngLat(feature.geometry.coordinates)
+                // Set the content of the pop up box
                 .setHTML(popupContent)
+                // Add it to the map
                 .addTo(map);
         });
         function showMoreInfo(feature) {
