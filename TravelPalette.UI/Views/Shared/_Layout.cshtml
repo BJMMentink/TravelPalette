@@ -68,16 +68,20 @@
                             @{
                                 TravelPalette.BL.UserManager.Seed();  // calling the seed
                                 var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
+                                var UserId = HttpContextAccessor.HttpContext?.Session.GetString("UserId");
                                 bool logoutHidden = true;
                                 bool loginHidden = false;
-                                if (FullName != null) 
+                                if (!string.IsNullOrEmpty(FullName)) 
                                 {
+                                    ViewBag.UserId = UserId;
                                     FullName = FullName.Replace("\"", "");    //string manipulation
                                     if (FullName != string.Empty ? logoutHidden = false : logoutHidden = true); // If theres no name then Logout will be hidden 
                                     loginHidden = !logoutHidden;                                                // Login and create account will show based on if Logout is hidden
                                 }
                             }
-                            <a class="nav-link text-dark rounded">@FullName</a>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark rounded" asp-area="" asp-controller="UserList" asp-action="Index" hidden="@logoutHidden">Lists</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Create" hidden="@loginHidden">Create Account</a>
                             </li>
@@ -87,6 +91,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark rounded" asp-area="" asp-controller="User" asp-action="Logout" hidden="@logoutHidden">Logout</a>
                             </li>
+                            <a class="nav-link text-dark rounded">@FullName</a>
                         </li>
                     </ul>
                 </div>

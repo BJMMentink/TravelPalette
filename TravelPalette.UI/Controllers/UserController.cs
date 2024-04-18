@@ -29,7 +29,8 @@ namespace TravelPalette.UI.Controllers
 
             if (user != null)
             {
-              HttpContext.Session.SetObject("FullName", "Welcome, " + user.FullName);
+                HttpContext.Session.SetObject("UserId", user.Id);
+                HttpContext.Session.SetObject("FullName", "Welcome, " + user.FullName);
             }
             else
             {
