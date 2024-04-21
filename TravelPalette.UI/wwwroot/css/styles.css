@@ -217,11 +217,8 @@ ul {
 }
 
 #logo {
-    margin: .5rem;
+    padding: 5px 0px 5px 10px;
     float: left;
-    border: 1px solid black;
-    width: 5em;
-    height: 2em;
 }
 
 #username, #login, #logout {

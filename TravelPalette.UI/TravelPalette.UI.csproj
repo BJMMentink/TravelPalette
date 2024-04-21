@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Map\" />
-    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>
