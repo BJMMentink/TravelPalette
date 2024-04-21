@@ -11,15 +11,7 @@
         <div class="login">
             <div id="logo">Logo</div>
             <div id="username">Username</div>
-            <div id="login">
-                Login
-                @{
-                TravelPalette.BL.UserManager.Seed();  // calling the seed
-                var FullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
-                if (FullName != null) FullName = FullName.Replace("\"", "");    //string manipulation
-                }
-                <a class="nav-link text-dark">@FullName</a>
-            </div>
+            <div id="login">Login</div>
         </div>
         <div class="nav">
             <nav>
@@ -33,17 +25,17 @@
             </nav>
         </div>
     </header>
-
     <main>
-        <div class="search-container">
-            <div>Tell us what you are looking for</div>
-            <div class="search-box">
-                <input type="text" placeholder="Search...">
-                <button type="submit">Search</button>
+        <div>
+            <div>
+                <h3>You're Logged Out.</h3>
+            </div>
+            <div>
+                <h4>Have a nice day - come back soon!</h4>
             </div>
         </div>
-    </main>
 
+    </main>
     <footer>
         <p>&copy; 2024 Copyright</p>
     </footer>
