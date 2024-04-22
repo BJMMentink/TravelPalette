@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TravelPalette.BL;
+using TravelPalette.BL.Models;
 using TravelPalette.UI.Models;
 
 namespace TravelPalette.UI.Controllers
@@ -36,11 +38,34 @@ namespace TravelPalette.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddToTrip(string id)
+        public ActionResult AddToTrip(string id, User user, bool rollback = false)
         {
-            // Here you can write code to add the id to your database
-            // For demonstration, let's just return a simple response
-            return Content($"Added feature with ID {id} to trip!");
+            // Split the id string at the '/' sign and grab the integer on the right side
+            string[] idParts = id.Split('/');
+            if (idParts.Length != 2 || !int.TryParse(idParts[1], out int tripId))
+            {
+                // Handle invalid id format
+                ViewBag.Error = "Invalid id format";
+                return View(user);
+            }
+
+            UserList userList = new UserList
+            {
+                Id = tripId,
+                // send through the id and user information
+            };
+            try
+            {
+                int result = UserListManager.Insert(userList, rollback);
+                return RedirectToAction("Home"); // Redirect back to the map
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(user);
+            }
         }
+
+
     }
 }

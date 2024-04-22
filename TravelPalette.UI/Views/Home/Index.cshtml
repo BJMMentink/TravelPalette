@@ -97,13 +97,22 @@
                 popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
             }
 
+            // Get the location id to split out the number
+            let locationId = feature.properties['@@id'];
+            // Split the URL by '/'
+            const parts = locationId.split('/');
+            console.log(parts);
+            // Get the last part, which is the ID
+            const formattedId = parts[1];
+
             // Added the location ID to the pop up
             if (feature.properties["@@id"]) {
-                popupContent += `<p>Location ID: ${feature.properties['@@id']}</p>`;
+                popupContent += `<p>Location ID: ${formattedId}</p>`;
             }
 
-            // Create pop up window to Add to Trip
-            popupContent += `<p><a href="/Home/AddToTrip/${feature.properties['@@id']}" target="_blank">Add To Trip</a></p>`;
+
+            
+            popupContent += `<p><a href="/Home/AddToTrip/${formattedId}" target="_blank">Add To Trip</a></p>`;
             const popup = new mapboxgl.Popup({ offset: [0, -15] })
                 // Set the placement of the mapbox
                 .setLngLat(feature.geometry.coordinates)
