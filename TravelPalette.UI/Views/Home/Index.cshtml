@@ -19,6 +19,18 @@
             width: 100%;
         }
 
+        .filter-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            background-color: #3386c0;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
         .filter-group {
             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
             font-weight: 600;
@@ -29,6 +41,7 @@
             border-radius: 3px;
             width: 120px;
             color: #fff;
+            display: none; /* Initially hide */
         }
 
             .filter-group input[type='checkbox']:first-child + label {
@@ -70,10 +83,14 @@
 </head>
 <body>
     <div id="map"></div>
+    <!-- Add a button to toggle filters -->
+    <button id="toggle-filters" class="filter-button">Show Filters</button>
+    <!-- Filter checkboxes -->
     <nav id="filter-group" class="filter-group"></nav>
 
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
+
 
         // This GeoJSON contains features that include an "icon"
         // property. The value of the "icon" property corresponds
@@ -3014,8 +3031,12 @@
                             e.target.checked ? 'none' : 'visible'
                         );
                     });
+
                 }
+
             }
+
+
         });
 
         map.on('click', (event) => {
@@ -3048,6 +3069,13 @@
                 .setLngLat(feature.geometry.coordinates)
                 .setHTML(popupContent)
                 .addTo(map);
+        });
+
+        // Toggle the visibility of filter checkboxes
+        const toggleFiltersButton = document.getElementById('toggle-filters');
+        toggleFiltersButton.addEventListener('click', () => {
+            const filterGroup = document.getElementById('filter-group');
+            filterGroup.style.display = filterGroup.style.display === 'none' ? 'block' : 'none';
         });
     </script>
 </body>
