@@ -177,7 +177,7 @@ namespace TravelPalette.BL
                 {
                     var results = (from ul in dc.tblUserLists
                                    join u in dc.tblUsers on ul.UserId equals u.Id
-                                   where ul.UserId == u.Id
+                                   where ul.UserId == userId && userId == u.Id 
                                    select new
                                    {
                                        ul.Id,

@@ -14,12 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ListId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ListName)
             </th>
             <th></th>
@@ -28,12 +22,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ListId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ListName)
             </td>

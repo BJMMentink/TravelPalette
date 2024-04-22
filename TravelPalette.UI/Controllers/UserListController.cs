@@ -8,15 +8,27 @@ namespace TravelPalette.UI.Controllers
     public class UserListController : Controller
     {
         // GET: UserListController
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
-            if (id == null)
+            int id = 0; 
+            try
             {
-                return View();
+
+                id = int.Parse(HttpContext.Session.GetString("UserId"));
+
+                if (id == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View(UserListManager.LoadByUserId(id));
+                }
             }
-            else
+            catch (Exception)
             {
-                 return View(UserListManager.LoadByUserId(id));
+
+                return View();
             }
         }
 
