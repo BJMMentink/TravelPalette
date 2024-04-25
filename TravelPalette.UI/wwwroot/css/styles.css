@@ -1,20 +1,45 @@
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
 
-body, html {
+div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
+    padding: 5px;
+}
+
+body {
     height: 100%;
     margin: 0;
     font-size: 1em;
     min-width: 40em;
+    font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+    font-size: 1em;
+    min-width: 40em;
+    font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 
 header {
-    background-color: #666;
+    background-color: #005b96;
     color: #fff;
     text-align: center;
     width: 100%;
 }
 
+.header h1, .header h2, .header h3, .header h4, .header h5 {
+    margin: 0px;
+    padding: 0px;
+    color: black;
+    font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
 main {
-    background-color: #999;
+    background-color: whitesmoke;
     min-height: 70vh;
     width: 100%;
     display: flex;
@@ -23,18 +48,19 @@ main {
 }
 
 footer {
-    background-color: #666;
-    color: #fff;
+    background-color: whitesmoke;
+    color: slategrey;
     padding: 1rem 1rem;
     bottom: 0;
     height: 5vh;
     text-align: left;
     padding-left: 20px;
+    border-top: 1px solid #3581B8;
 }
 
 form input {
     justify-content: right;
-}
+} 
 
 
 nav ul {
@@ -42,13 +68,14 @@ nav ul {
     justify-content: center;
     align-items: center;
     list-style-type: none;
+    background-color: #005b96;
 }
 
-nav ul li {
-    flex-grow: 1;
-    display: flex;
-    align-content: center;
-}
+    nav ul li {
+        flex-grow: 1;
+        display: flex;
+        align-content: center;
+    }
 
     nav ul li a {
         text-decoration: none;
@@ -63,20 +90,22 @@ nav ul li {
 
 .buttons {
     margin-top: 10px;
+    background-color: #011f4b;
 }
 
     .buttons button {
-        background-color: #333;
+        background-color: #011f4b;
         padding: .5rem 1rem;
         margin-right: 5%;
         margin-left: 5%;
-        color: white;
+        color: whitesmoke;
         border: none;
-        cursor: pointer;
     }
 
+
+
 .info-container {
-    background-color: white;
+    background-color: #6497b1;
     margin: 5px;
     padding: 5px;
     min-height: 10vh;
@@ -90,6 +119,7 @@ nav ul li {
     width: 100%;
     max-height: 70vh;
     overflow-y: auto; /* Scrolling */
+    background-color: whitesmoke;
 }
 
 
@@ -99,25 +129,46 @@ nav ul li {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-color: #999;
+    background-color: #6497b1;
 }
 
 
 .map-container {
     width: 100vw;
     height: 80vh;
-    background-color: #222;
+    background-color: #b3cde0;
 }
 
 .login {
-    background-color: #888;
+    background-color: #011f4b;
     min-height: 12vh;
+    color: whitesmoke;
+}
+
+li.nav-item a:hover {
+    background-color: #6497b1;
+    color: #005b96;
+    text-decoration: none;
+    padding: 5px;
+    list-style-type: none;
+}
+
+li.nav-item a {
+    color: whitesmoke;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+ul {
+    text-decoration: none;
+    list-style-type: none;
 }
 
 .login-container {
     max-width: 25em;
     min-width: 40vw;
     text-align: center;
+    padding: 20px;
 }
 
 .login-form {
@@ -131,58 +182,53 @@ nav ul li {
 }
 
 .nav {
-    background-color: #777;
+    background-color: #005b96;
     height: 6rem;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
 }
 
 .search-box {
-    background-color: grey;
+    background-color: #b3cde0;
     padding: 20px;
     border-radius: 5px;
 }
 
-.search-box button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-left: 10px;
-}
+    .search-box button {
+        padding: 10px 20px;
+        background-color: #6497b1;
+        color: #011f4b;
+        border: none;
+        cursor: pointer;
+        margin-left: 10px;
+    }
 
-.search-box input {
-    padding: 10px;
-    width: 65%;
-    border: 1px solid #ccc;
-}
+    .search-box input {
+        padding: 10px;
+        width: 65%;
+        border: 1px solid #6497b1;
+    }
 
 .search-container {
     width: 80%;
     text-align: center;
-    background-color: grey;
+    background-color: #b3cde0;
     padding-top: 10px;
 }
 
-
-
 #logo {
-    margin: .5rem;
+    padding: 5px 0px 5px 10px;
     float: left;
-    border: 1px solid black;
-    width: 5em;
-    height: 2em;
 }
 
 #username, #login, #logout {
     padding: 1rem;
     font-size: 1rem;
     font: weight 200px;
-    ;
     float: right;
+    color: whitesmoke;
 }
 
-
-
-
+div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
+    padding: 5px;
+}
