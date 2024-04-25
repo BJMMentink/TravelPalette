@@ -2,6 +2,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="map-container" id="map">
+<!-- Add a button to toggle filters -->
+<button id="toggle-filters" class="filter-button">Show Filters</button>
+<!-- Filter checkboxes -->
+<nav id="filter-group" class="filter-group"></nav>
 </div>
 <div class="list-container">
     <div class="info-container">Container 1</div>
@@ -18,11 +22,2953 @@
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
+
+
+    // This GeoJSON contains features that include an "icon"
+    // property. The value of the "icon" property corresponds
+    // to an image in the Mapbox Light style's sprite. (Note:
+    // the name of images is the value of the "icon" property
+    // + "-15".)
+    const places = {
+        'type': 'FeatureCollection',
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/10021941017",
+                    "amenity": "restaurant",
+                    "cuisine": "mexican",
+                    "name": "Tipsy Taco"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.416021,
+                        44.260872
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/10021941017"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "contact:website": "https://www.starbucks.com/store-locator/store/1040598/hilton-appleton-paper-valley-333-w-college-ave-appleton-wi-54911-us",
+                    "cuisine": "coffee_shop",
+                    "brand": "Starbucks",
+                    "name": "Starbucks",
+                    "brand:wikidata": "Q37158",
+                    "construction": "yes",
+                    "takeaway": "yes",
+                    "amenity": "cafe",
+                    "outdoor_seating": "no",
+                    "id": "node/10082473208",
+                    "official_name": "Starbucks Coffee"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.409592,
+                        44.261592
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/10082473208"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "220",
+                    "level": "0",
+                    "opening_hours": "Tu-We 15:00-20:00; Th 15:00-21:00; Fr-Sa 15:00-22:00",
+                    "addr:state": "WI",
+                    "name": "Mondo! Wine Bar & Retail",
+                    "addr:street": "West College Avenue",
+                    "phone": "920-903-1787",
+                    "addr:city": "Appleton",
+                    "shop": "wine",
+                    "addr:postcode": "54911",
+                    "amenity": "bar",
+                    "website": "https://www.mondowinebar.com/",
+                    "id": "node/10313691629",
+                    "email": "infomondowinebar.com"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.408119,
+                        44.26199
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/10313691629"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "222",
+                    "branch": "Appleton",
+                    "operator": "Johnson Financial Group",
+                    "opening_hours": "Mo-Fr 08:30-17:00",
+                    "addr:state": "WI",
+                    "start_date": "2006",
+                    "name": "Johnson Financial Group - Appleton",
+                    "addr:street": "West College Avenue",
+                    "phone": "(920) 225-5500",
+                    "drive_through": "no",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "bank",
+                    "atm": "yes",
+                    "website": "https://www.johnsonfinancialgroup.com/locations/wi/appleton/appleton",
+                    "id": "node/10313691630"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.408506,
+                        44.261999
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/10313691630"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/11368994236",
+                    "amenity": "cafe",
+                    "cuisine": "coffee_shop",
+                    "name": "Coffee Wizardz"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.396021,
+                        44.255374
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/11368994236"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/11368994237",
+                    "amenity": "arts_centre",
+                    "name": "The Draw"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.396012,
+                        44.255277
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/11368994237"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/1302229351",
+                    "amenity": "restaurant",
+                    "name": "VFW",
+                    "wheelchair": "no"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415912,
+                        44.26584
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/1302229351"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "118",
+                    "name": "Josef's Gyros Kabob",
+                    "addr:street": "Soldiers Square",
+                    "phone": "+1-920-830-9355",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "website": "http://www.gyros-kabob.com/",
+                    "id": "node/2951707165"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405144,
+                        44.261336
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/2951707165"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "229",
+                    "addr:state": "WI",
+                    "amenity_1": "arts_centre",
+                    "name": "Pinot's Palette",
+                    "addr:street": "East College Avenue",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "bar",
+                    "id": "node/3705942113"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403219,
+                        44.262002
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/3705942113"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "220",
+                    "cuisine": "chinese",
+                    "addr:state": "WI",
+                    "name": "Hunan 1",
+                    "addr:street": "East College Avenue",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "id": "node/3705942115"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403408,
+                        44.26201
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/3705942115"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "218",
+                    "cuisine": "sandwich",
+                    "brand": "Erbert & Gerbert's",
+                    "addr:state": "WI",
+                    "name": "Erbert & Gerbert's",
+                    "addr:street": "East College Avenue",
+                    "brand:wikidata": "Q5385097",
+                    "addr:city": "Appleton",
+                    "takeaway": "yes",
+                    "addr:postcode": "54911",
+                    "amenity": "fast_food",
+                    "id": "node/3705942116",
+                    "official_name": "Erbert & Gerbert's Sandwich Shop"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403504,
+                        44.262015
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/3705942116"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "215",
+                    "old_name": "Queen Bee",
+                    "cuisine": "american",
+                    "addr:state": "WI",
+                    "name": "Garden View",
+                    "addr:street": "East College Avenue",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "id": "node/3705942117"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403599,
+                        44.262012
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/3705942117"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/3705947940",
+                    "addr:city": "Appleton",
+                    "addr:housenumber": "109",
+                    "addr:postcode": "54911",
+                    "addr:state": "WI",
+                    "addr:street": "West College Avenue",
+                    "amenity": "pub",
+                    "name": "Olde Town Tavern"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406351,
+                        44.261635
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/3705947940"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/3705947941",
+                    "addr:city": "Appleton",
+                    "addr:housenumber": "109",
+                    "addr:postcode": "54911",
+                    "addr:state": "WI",
+                    "addr:street": "West College Avenue",
+                    "amenity": "pub",
+                    "name": "Bazil's Pub and Provisions"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406422,
+                        44.261637
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/3705947941"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/4989091522",
+                    "addr:street": "West College Avenue",
+                    "amenity": "bar",
+                    "name": "Jack's Apple pub",
+                    "name:en": "Jack's Apple pub",
+                    "not:brand:wikidata": "Q6110826"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41354,
+                        44.261636
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/4989091522"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/5415376532",
+                    "amenity": "theatre",
+                    "capacity": "450",
+                    "name": "Kimberly-Clark Theater"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411266,
+                        44.262428
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/5415376532"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/5415376533",
+                    "amenity": "theatre",
+                    "capacity": "2,100",
+                    "name": "Thrivent Financial Hall"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411664,
+                        44.262252
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/5415376533"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/553329327",
+                    "amenity": "pub",
+                    "name": "Drinks Inc."
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410599,
+                        44.262187
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/553329327"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "411",
+                    "addr:housename": "Sal's Pizza",
+                    "cuisine": "pizza",
+                    "name": "Sal's Pizza",
+                    "addr:street": "W college Ave",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "id": "node/553329334"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411179,
+                        44.261647
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/553329334"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/553331102",
+                    "amenity": "post_box",
+                    "drive_through": "yes",
+                    "name": "Appleton Post Office",
+                    "operator": "United States Postal Service",
+                    "operator:short": "USPS",
+                    "operator:type": "public",
+                    "operator:wikidata": "Q668687"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410878,
+                        44.265162
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/553331102"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/5579151382",
+                    "addr:city": "Appleton",
+                    "addr:housenumber": "503",
+                    "addr:postcode": "54911",
+                    "addr:street": "W College Ave",
+                    "amenity": "restaurant",
+                    "cuisine": "italian",
+                    "name": "Victoria's italian Cuisine"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.412304,
+                        44.261616
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/5579151382"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "109",
+                    "cuisine": "pizza",
+                    "brand": "Toppers Pizza",
+                    "name": "Toppers Pizza",
+                    "addr:street": "E College Ave",
+                    "brand:wikidata": "Q7825113",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "id": "node/5579164121"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.40547,
+                        44.261649
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/5579164121"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/5638085611",
+                    "amenity": "events_venue",
+                    "name": "Trolley Square Waterfront Banquets"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405347,
+                        44.255962
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/5638085611"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "217",
+                    "addr:state": "WI",
+                    "name": "Wooden Nickel Sports Bar & Grill",
+                    "addr:street": "E College Ave",
+                    "phone": "+1 920-735-0661",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "website": "https://woodennickelsportsbar.com/",
+                    "id": "node/5977948651"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403559,
+                        44.261623
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/5977948651"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/6045449143",
+                    "amenity": "theatre",
+                    "name": "Harper Hall"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.399959,
+                        44.262159
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/6045449143"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/6045449144",
+                    "amenity": "theatre",
+                    "name": "Cloak Theater"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.400248,
+                        44.262085
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/6045449144"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/6045449145",
+                    "amenity": "theatre",
+                    "name": "Stansbury Theatre"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.400208,
+                        44.262375
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/6045449145"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/6374020610",
+                    "amenity": "restaurant",
+                    "cuisine": "steak_house",
+                    "name": "Vince Lombardi's Steak House",
+                    "outdoor_seating": "no"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.409864,
+                        44.26158
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/6374020610"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/6800751910",
+                    "amenity": "ice_cream",
+                    "name": "Doughlicious\u00e2\u20ac\u2122"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.409755,
+                        44.261993
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/6800751910"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/7167971531",
+                    "amenity": "childcare",
+                    "name": "Community Nursery School"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.395392,
+                        44.262404
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/7167971531"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/7931325897",
+                    "amenity": "restaurant",
+                    "cuisine": "sushi",
+                    "name": "Sushi Lover"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.413307,
+                        44.261634
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/7931325897"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8089845917",
+                    "addr:housenumber": "111",
+                    "addr:street": "North Walnut Street",
+                    "amenity": "restaurant",
+                    "cuisine": "american",
+                    "name": "The Cozzy Kitchen",
+                    "name:en": "The Cozzy Corner",
+                    "opening_hours": "Tu-Su 11:30-21:00"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.412256,
+                        44.262223
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8089845917"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8196459527",
+                    "amenity": "bank",
+                    "drive_through": "no",
+                    "name": "Nicolet National Bank"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.404178,
+                        44.261649
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8196459527"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333081",
+                    "amenity": "bar",
+                    "name": "Calavera\u00e2\u20ac\u2122s Fine Fusions"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.413306,
+                        44.262005
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333081"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333083",
+                    "amenity": "restaurant",
+                    "cuisine": "mexican",
+                    "name": "King Taco"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.413536,
+                        44.261483
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333083"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333098",
+                    "amenity": "restaurant",
+                    "cuisine": "japanese",
+                    "name": "Katsu-Ya of Japan"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410575,
+                        44.262026
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333098"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333104",
+                    "amenity": "bank",
+                    "name": "Byline Bank"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.409891,
+                        44.262209
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333104"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333108",
+                    "amenity": "cafe",
+                    "name": "Aunty's Caf\u00c3\u00a9"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406281,
+                        44.262007
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333108"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333109",
+                    "amenity": "fast_food",
+                    "brand": "Tropical Smoothie Cafe",
+                    "brand:wikidata": "Q7845817",
+                    "cuisine": "juice",
+                    "name": "Tropical Smoothie Cafe",
+                    "takeaway": "yes"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.40578,
+                        44.262328
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333109"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988333110",
+                    "amenity": "restaurant",
+                    "cuisine": "pasta",
+                    "name": "Bowl Ninety-One"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405747,
+                        44.262027
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988333110"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988563512",
+                    "amenity": "arts_centre"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403217,
+                        44.262135
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988563512"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988563515",
+                    "addr:city": "Appleton",
+                    "addr:housenumber": "314",
+                    "addr:state": "WI",
+                    "addr:street": "East College Avenue",
+                    "amenity": "bar",
+                    "min_age": "21",
+                    "name": "Dr. Jekyll's"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.40207,
+                        44.261992
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988563515"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573517",
+                    "amenity": "cafe",
+                    "name": "Lou's Brew Cafe & Lounge"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.402978,
+                        44.261621
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573517"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573521",
+                    "amenity": "bar",
+                    "name": "Jim's Place"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403357,
+                        44.261652
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573521"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573522",
+                    "amenity": "bar",
+                    "leisure": "amusement_arcade",
+                    "name": "Player 2 Arcade Bar"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403639,
+                        44.26164
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573522"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573524",
+                    "amenity": "pharmacy",
+                    "dispensing": "yes",
+                    "healthcare": "pharmacy",
+                    "name": "RxLink Pharmacy",
+                    "shop": "chemist"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.404586,
+                        44.261642
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573524"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573533",
+                    "amenity": "bar",
+                    "name": "Ambassador"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407441,
+                        44.26134
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573533"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573535",
+                    "amenity": "restaurant",
+                    "cuisine": "burger",
+                    "name": "Home Burger Bar"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407577,
+                        44.261661
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573535"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573536",
+                    "amenity": "bar",
+                    "name": "Cleo's"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407492,
+                        44.261657
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573536"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573538",
+                    "amenity": "cafe",
+                    "cuisine": "tea",
+                    "name": "Fika Tea Bar"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407655,
+                        44.261652
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573538"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573539",
+                    "amenity": "bar",
+                    "name": "Bad Badger Sports Bar"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407951,
+                        44.261628
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573539"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573552",
+                    "amenity": "pub",
+                    "name": "The Durty Leprechaun"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410556,
+                        44.261649
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573552"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573553",
+                    "amenity": "fast_food",
+                    "brand": "Jimmy John's",
+                    "brand:wikidata": "Q1689380",
+                    "cuisine": "sandwich",
+                    "name": "Jimmy John's",
+                    "official_name": "Jimmy John's Gourmet Sandwiches",
+                    "takeaway": "yes"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410631,
+                        44.26165
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573553"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573556",
+                    "amenity": "bar",
+                    "name": "D2 Sports Pub"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410947,
+                        44.261635
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573556"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573564",
+                    "amenity": "theatre",
+                    "name": "The Bent King"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411451,
+                        44.261652
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573564"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573565",
+                    "amenity": "bar",
+                    "name": "Speakeasy Ultra Lounge"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411724,
+                        44.261648
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573565"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573566",
+                    "amenity": "bar",
+                    "level": "2",
+                    "min_age": "21",
+                    "name": "Leg Lamp Lodge"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411916,
+                        44.261641
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573566"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573570",
+                    "amenity": "pub",
+                    "name": "OB's Brau Haus"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.413122,
+                        44.261634
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573570"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8988573571",
+                    "amenity": "nightclub",
+                    "name": "C-Vine Lounge"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41345,
+                        44.261636
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8988573571"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/8993114991",
+                    "amenity": "theatre",
+                    "lit": "yes",
+                    "name": "Houdini Plaza Stage",
+                    "theatre:type": "amphi"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406787,
+                        44.26123
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/8993114991"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9088031498",
+                    "amenity": "restaurant",
+                    "name": "River Tyme Bistro",
+                    "website": "https://rivertymebistro.com/"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41172,
+                        44.254751
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9088031498"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9231068517",
+                    "amenity": "restaurant",
+                    "name": "Emmett's Bar & Grill"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.416073,
+                        44.263036
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9231068517"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9231068518",
+                    "amenity": "restaurant",
+                    "cuisine": "mexican",
+                    "name": "Lindo Michoacan"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.416063,
+                        44.263303
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9231068518"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9231068519",
+                    "amenity": "bank",
+                    "name": "Community First Credit Union"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415999,
+                        44.265998
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9231068519"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9231068520",
+                    "amenity": "dojo",
+                    "name": "Soto's Martial Arts"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415329,
+                        44.266723
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9231068520"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9231068521",
+                    "amenity": "bank",
+                    "name": "Badgerland Community Mortgage"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415466,
+                        44.266802
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9231068521"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9231068522",
+                    "amenity": "dentist",
+                    "healthcare": "dentist",
+                    "name": "Apple Town Dental Care"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41532,
+                        44.2669
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9231068522"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "node/9930451887",
+                    "addr:city": "Appleton",
+                    "addr:housenumber": "101",
+                    "addr:postcode": "54914",
+                    "addr:state": "WI",
+                    "addr:street": "W Edison Avenue",
+                    "amenity": "bar",
+                    "name": "Tandem Wine and Beer"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403882,
+                        44.25489
+                    ],
+                    "type": "Point"
+                },
+                "id": "node/9930451887"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "711",
+                    "operator": "Lawrence University",
+                    "addr:state": "WI",
+                    "wheelchair": "limited",
+                    "name": "Lawrence University",
+                    "addr:street": "East Boldt Way",
+                    "phone": "+1 920 832 7000",
+                    "operator:type": "private",
+                    "geometry": "center",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "wikipedia": "en:Lawrence University",
+                    "amenity": "university",
+                    "type": "multipolygon",
+                    "wikidata": "Q1809286",
+                    "website": "http://lawrence.edu",
+                    "id": "relation/3941264"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.394977,
+                        44.259549
+                    ],
+                    "type": "Point"
+                },
+                "id": "relation/3941264"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/1004807121",
+                    "amenity": "fuel",
+                    "brand": "Kwik Trip",
+                    "brand:wikidata": "Q6450420",
+                    "name": "Kwik Trip",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.396123,
+                        44.273384
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/1004807121"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/1005077044",
+                    "amenity": "fuel",
+                    "brand": "Citgo",
+                    "brand:wikidata": "Q2974437",
+                    "name": "Citgo",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.40637,
+                        44.272699
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/1005077044"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/1062167191",
+                    "amenity": "bar",
+                    "building": "yes",
+                    "min_age": "21",
+                    "name": "Fox River House",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41235,
+                        44.260339
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/1062167191"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "210",
+                    "cuisine": "coffee",
+                    "addr:state": "WI",
+                    "name": "Copper Rock Coffee Company",
+                    "addr:street": "West College Avenue",
+                    "geometry": "center",
+                    "building": "commercial",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "cafe",
+                    "id": "way/292345937"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407829,
+                        44.262159
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292345937"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "200",
+                    "brand": "Chase",
+                    "name": "Chase",
+                    "addr:street": "West College Avenue",
+                    "brand:wikidata": "Q524629",
+                    "drive_through": "yes",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "bank",
+                    "atm": "yes",
+                    "id": "way/292345938"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407563,
+                        44.262164
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292345938"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/292348199",
+                    "amenity": "bank",
+                    "brand": "BMO Harris Bank",
+                    "brand:wikidata": "Q4835981",
+                    "building": "yes",
+                    "name": "BMO Harris Bank",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.408314,
+                        44.261469
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292348199"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/292348202",
+                    "amenity": "theatre",
+                    "building": "yes",
+                    "name": "Gibson Music Hall",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407817,
+                        44.261467
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292348202"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "107",
+                    "cuisine": "coffee_shop",
+                    "addr:state": "WI",
+                    "name": "Brewed Awakenings",
+                    "addr:street": "East College Avenue",
+                    "geometry": "center",
+                    "building": "commercial",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "cafe",
+                    "id": "way/292363804"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405569,
+                        44.26157
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292363804"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/292364962",
+                    "amenity": "restaurant",
+                    "building": "commercial",
+                    "name": "Author's Kitchen and Bar",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.404926,
+                        44.261544
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292364962"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "operator": "Outagamie County",
+                    "addr:state": "WI",
+                    "name": "Outagamie County Justice Center",
+                    "geometry": "center",
+                    "building": "prison",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "courthouse",
+                    "source": "http://www.outagamie.org/modules/showdocument.aspx?documentid=4757",
+                    "id": "way/292459952"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.410206,
+                        44.25925
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292459952"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/292460493",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "name": "Rye",
+                    "opening_hours:covid19": "restricted",
+                    "website": "https://ryedining.com/",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.409188,
+                        44.262168
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292460493"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "100",
+                    "addr:state": "WI",
+                    "townhall:type": "city",
+                    "name": "Appleton City Hall",
+                    "gnis:import_uuid": "57871b70-0100-4405-bb30-88b2e001a944",
+                    "addr:street": "West College Avenue",
+                    "gnis:feature_id": "1851377",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "gnis:county_name": "Outagamie",
+                    "amenity": "townhall",
+                    "id": "way/292622848",
+                    "ele": "242"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406913,
+                        44.262297
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292622848"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "215",
+                    "addr:state": "WI",
+                    "name": "Breakthrough Covenant Church",
+                    "addr:street": "East Washington Street",
+                    "religion": "christian",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "place_of_worship",
+                    "id": "way/292623694"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403675,
+                        44.262645
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292623694"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "204",
+                    "cuisine": "mexican",
+                    "addr:state": "WI",
+                    "name": "Antojitos Mexicanos",
+                    "addr:street": "East College Avenue",
+                    "geometry": "center",
+                    "building": "commercial",
+                    "addr:city": "Appleton",
+                    "delivery": "no",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "id": "way/292625936"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.404021,
+                        44.262117
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/292625936"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "213",
+                    "denomination": "catholic",
+                    "name": "Saint Therese Parrish",
+                    "addr:street": "East Wisconsin Avenue",
+                    "religion": "christian",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "place_of_worship",
+                    "id": "way/298747394"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403848,
+                        44.272605
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/298747394"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/298979888",
+                    "amenity": "place_of_worship",
+                    "building": "yes",
+                    "denomination": "lutheran",
+                    "name": "Zion Lutheran Church",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405383,
+                        44.270031
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/298979888"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/323891430",
+                    "amenity": "police",
+                    "building": "yes",
+                    "name": "Appleton Police Department",
+                    "operator": "City of Appleton",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411355,
+                        44.260224
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/323891430"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/323892440",
+                    "amenity": "bar",
+                    "building": "yes",
+                    "min_age": "21",
+                    "name": "The Bar",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41187,
+                        44.261517
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/323892440"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/325094501",
+                    "amenity": "place_of_worship",
+                    "building": "church",
+                    "denomination": "catholic",
+                    "name": "St. Joseph Catholic Church",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.4111,
+                        44.261078
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/325094501"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/325231098",
+                    "amenity": "bar",
+                    "building": "yes",
+                    "name": "Deja vu Martini Lounge",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.412971,
+                        44.261531
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/325231098"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "110",
+                    "addr:state": "WI",
+                    "wheelchair": "limited",
+                    "name": "Good Company",
+                    "addr:street": "North Richmond Street",
+                    "geometry": "center",
+                    "building": "commercial",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "id": "way/325231548"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415252,
+                        44.26213
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/325231548"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/325231948",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "cuisine": "asian",
+                    "name": "Mai's Deli",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415137,
+                        44.261439
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/325231948"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/325232260",
+                    "amenity": "restaurant",
+                    "amenity_1": "pub",
+                    "building": "yes",
+                    "name": "Appleton Beer Factory",
+                    "outdoor_seating": "no",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41407,
+                        44.261532
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/325232260"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "229",
+                    "denomination": "lutheran",
+                    "addr:state": "WI",
+                    "name": "Mosaic Family Health",
+                    "addr:street": "South Morrison Street",
+                    "healthcare": "clinic",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "clinic",
+                    "id": "way/325239665"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.404678,
+                        44.260112
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/325239665"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/326107317",
+                    "amenity": "theatre",
+                    "building": "yes",
+                    "name": "Miron Construction Amphitheatre",
+                    "theatre:type": "amphi",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407592,
+                        44.259397
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/326107317"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/425617643",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "name": "Fratellos",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41213,
+                        44.254361
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/425617643"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "bus": "yes",
+                    "operator": "Valley Transit",
+                    "name": "Appleton Transit Center",
+                    "smoking": "no",
+                    "geometry": "center",
+                    "public_transport": "station",
+                    "building": "yes",
+                    "wikipedia": "en:Appleton Transit Center",
+                    "amenity": "bus_station",
+                    "wikidata": "Q4781414",
+                    "id": "way/439899103"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405705,
+                        44.263407
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/439899103"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/441217594",
+                    "amenity": "arts_centre",
+                    "name": "Amphitheater",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.397608,
+                        44.260571
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/441217594"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/441217600",
+                    "amenity": "library",
+                    "building": "university",
+                    "name": "Seeley G. Mudd Library",
+                    "operator": "Lawrence University",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.397794,
+                        44.261298
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/441217600"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/441217627",
+                    "amenity": "music_school",
+                    "building": "university",
+                    "name": "Community Music School",
+                    "operator": "Lawrence University",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406316,
+                        44.258855
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/441217627"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/441217652",
+                    "amenity": "arts_centre",
+                    "building": "yes",
+                    "name": "Lawrence Memorial Chapel",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.399091,
+                        44.262362
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/441217652"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/441217657",
+                    "amenity": "place_of_worship",
+                    "building": "yes",
+                    "denomination": "episcopal",
+                    "name": "All Saints Episcopal Church",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.400659,
+                        44.262322
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/441217657"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/441217670",
+                    "amenity": "place_of_worship",
+                    "building": "yes",
+                    "denomination": "presbyterian",
+                    "name": "Memorial Presbyterian Church",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.394587,
+                        44.261425
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/441217670"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/443706923",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "name": "Pullmans at Trolley Square",
+                    "outdoor_seating": "yes",
+                    "takeaway": "yes",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405523,
+                        44.255832
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/443706923"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "314",
+                    "addr:state": "WI",
+                    "name": "The Mission Church",
+                    "addr:street": "North Appleton Street",
+                    "religion": "christian",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "place_of_worship",
+                    "id": "way/444576134"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406931,
+                        44.264543
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/444576134"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "322",
+                    "operator": "Valley Packaging Industries, Inc.",
+                    "addr:state": "WI",
+                    "name": "Clare Kiepke Community Outreach Center",
+                    "addr:street": "North Appleton Street",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "community_centre",
+                    "id": "way/444576135"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.406968,
+                        44.264781
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/444576135"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/444576139",
+                    "amenity": "theatre",
+                    "building": "yes",
+                    "name": "Outer Edge Stage",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.40629,
+                        44.264215
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/444576139"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "207",
+                    "cuisine": "greek",
+                    "addr:state": "WI",
+                    "name": "Apollon",
+                    "addr:street": "North Appleton Street",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "restaurant",
+                    "id": "way/445216875"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407543,
+                        44.263218
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/445216875"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "111",
+                    "addr:state": "WI",
+                    "name": "Fox Banquets and Rivertyme Catering",
+                    "addr:street": "East Kimball Street",
+                    "geometry": "center",
+                    "addr:city": "Appleton",
+                    "amenity": "restaurant",
+                    "demolished:building": "yes",
+                    "id": "way/469114088"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405663,
+                        44.259653
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/469114088"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/487229022",
+                    "amenity": "place_of_worship",
+                    "building": "church",
+                    "denomination": "lutheran",
+                    "name": "The CORE",
+                    "old_name": "Thompson Community Center",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41866,
+                        44.262241
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/487229022"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/548633015",
+                    "amenity": "bank",
+                    "brand": "BMO Harris Bank",
+                    "brand:wikidata": "Q4835981",
+                    "building": "yes",
+                    "name": "BMO Harris Bank",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.40065,
+                        44.273252
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/548633015"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "operator": "Paper Valley Hotel and City of Appleton",
+                    "name": "Fox Cities Exhibition Center",
+                    "operator:type": "public",
+                    "geometry": "center",
+                    "building": "yes",
+                    "wikipedia": "en:Fox Cities Exhibition Center",
+                    "amenity": "exhibition_centre",
+                    "wikidata": "Q29613413",
+                    "id": "way/552430594"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.409951,
+                        44.260229
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/552430594"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "400",
+                    "fee": "yes",
+                    "addr:state": "WI",
+                    "name": "Fox Cities Performing Arts Center",
+                    "addr:street": "West College Avenue",
+                    "phone": "+1-920-730-3782",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "wikipedia": "en:Fox Cities Performing Arts Center",
+                    "amenity": "arts_centre",
+                    "wikidata": "Q5476645",
+                    "website": "http://www.foxcitiespac.org/",
+                    "id": "way/561639932",
+                    "description": "Large venue hosting national music acts, Broadway shows & other high-profile entertainment."
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411529,
+                        44.262366
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/561639932"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/567952278",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "name": "Riverside Bar & Grill",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403314,
+                        44.254551
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/567952278"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/577278329",
+                    "amenity": "fast_food",
+                    "building": "commercial",
+                    "cuisine": "burger",
+                    "name": "Tom's Drive In",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.396198,
+                        44.272598
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/577278329"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/577758664",
+                    "amenity": "bank",
+                    "atm": "yes",
+                    "brand": "Wells Fargo",
+                    "brand:wikidata": "Q744149",
+                    "building": "yes",
+                    "name": "Wells Fargo",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.413209,
+                        44.261089
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/577758664"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/578140499",
+                    "amenity": "bank",
+                    "brand": "U.S. Bank",
+                    "brand:wikidata": "Q739084",
+                    "building": "yes",
+                    "name": "U.S. Bank",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.402456,
+                        44.263301
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/578140499"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "211",
+                    "addr:state": "WI",
+                    "name": "SOAR Fox Cities",
+                    "addr:street": "East Franklin Street",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "community_centre",
+                    "id": "way/578140501"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.403764,
+                        44.263835
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/578140501"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "230",
+                    "addr:state": "WI",
+                    "name": "Downtowne Dental Group",
+                    "addr:street": "North Morrison Street",
+                    "healthcare": "dentist",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "dentist",
+                    "id": "way/578140502"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.404109,
+                        44.263709
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/578140502"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "229",
+                    "addr:state": "WI",
+                    "name": "Fox Run Dental",
+                    "addr:street": "East Franklin Street",
+                    "healthcare": "dentist",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "dentist",
+                    "id": "way/578140503"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.402943,
+                        44.263828
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/578140503"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/583693584",
+                    "amenity": "cafe",
+                    "building": "yes",
+                    "cuisine": "coffee",
+                    "name": "Acoca Coffee",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.412295,
+                        44.262116
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/583693584"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/595522937",
+                    "amenity": "fuel",
+                    "brand": "BP",
+                    "brand:wikidata": "Q152057",
+                    "building": "yes",
+                    "name": "BP",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.419842,
+                        44.261554
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/595522937"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "935",
+                    "social_facility:for": "senior",
+                    "name": "Eagle Point Senior Living",
+                    "addr:street": "East John Street",
+                    "geometry": "center",
+                    "building": "yes",
+                    "social_facility": "nursing_home",
+                    "amenity": "social_facility",
+                    "id": "way/661513926"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.391943,
+                        44.258808
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/661513926"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "323",
+                    "addr:state": "WI",
+                    "name": "Seth's Coffee Drive Thru",
+                    "addr:street": "East Washington Street",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "cafe",
+                    "id": "way/676164535"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.401695,
+                        44.262787
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/676164535"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "309",
+                    "addr:state": "WI",
+                    "name": "Appleton Rock School",
+                    "addr:street": "East Washington Street",
+                    "geometry": "center",
+                    "building": "school",
+                    "addr:city": "Appleton",
+                    "amenity": "music_school",
+                    "id": "way/676164567"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.402207,
+                        44.262787
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/676164567"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "609",
+                    "addr:state": "WI",
+                    "wheelchair": "yes",
+                    "name": "Float Light",
+                    "smoking": "outside",
+                    "addr:street": "West College Avenue",
+                    "addr:country": "US",
+                    "addr:unit": "C",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "building:levels": "2",
+                    "shop": "massage",
+                    "addr:postcode": "54911",
+                    "amenity": "Isolation tank",
+                    "id": "way/700437212"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41441,
+                        44.261522
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/700437212"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/759184369",
+                    "amenity": "pub",
+                    "building": "yes",
+                    "name": "McGuinness Irish Pub",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.412358,
+                        44.260501
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/759184369"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/759184441",
+                    "amenity": "place_of_worship",
+                    "building": "church",
+                    "denomination": "catholic",
+                    "name": "St. Mary's Catholic Church",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.413273,
+                        44.259058
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/759184441"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "215",
+                    "cuisine": "mexican",
+                    "opening_hours": "Mo-Th 11:00-21:00; Fr-Sa 11:00-22:00; Su 11:00-20:00",
+                    "addr:state": "WI",
+                    "start_date": "2008",
+                    "name": "Sangria's Mexican Grill",
+                    "addr:street": "South Memorial Drive",
+                    "phone": "(920) 955-3755",
+                    "geometry": "center",
+                    "building": "retail",
+                    "addr:city": "Appleton",
+                    "delivery": "yes",
+                    "addr:postcode": "54911",
+                    "amenity": "restaurant",
+                    "outdoor_seating": "no",
+                    "website": "https://www.sangriasmexicangrill.com/index.php",
+                    "id": "way/759184708",
+                    "email": "sangriasmexicangrillgmail.com"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415718,
+                        44.260177
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/759184708"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/759461709",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "cuisine": "asian",
+                    "name": "Dong Po",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.416447,
+                        44.261607
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/759461709"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/759461722",
+                    "amenity": "restaurant",
+                    "building": "yes",
+                    "cuisine": "american",
+                    "name": "Spats",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.416754,
+                        44.261562
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/759461722"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "325",
+                    "denomination": "united_methodist",
+                    "addr:state": "WI",
+                    "name": "First United Methodist Church",
+                    "addr:street": "East Franklin Street",
+                    "religion": "christian",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "place_of_worship",
+                    "id": "way/762393357"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.401486,
+                        44.263609
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762393357"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "740",
+                    "denomination": "methodist",
+                    "addr:state": "WI",
+                    "name": "Emmanuel United Methodist Church",
+                    "addr:street": "East College Avenue",
+                    "religion": "christian",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "place_of_worship",
+                    "id": "way/762393396"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.395462,
+                        44.26228
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762393396"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/762457740",
+                    "amenity": "restaurant",
+                    "building": "commercial",
+                    "cuisine": "asian",
+                    "name": "My Lee's Egg Roll House",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.41604,
+                        44.26427
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762457740"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "926",
+                    "addr:state": "WI",
+                    "name": "Capital Credit Union",
+                    "addr:street": "West College Avenue",
+                    "drive_through": "yes",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "amenity": "bank",
+                    "atm": "yes",
+                    "id": "way/762461623"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.420166,
+                        44.262221
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762461623"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "branch": "Appleton",
+                    "social_facility:for": "children",
+                    "brand": "Boys & Girls Club",
+                    "name": "Boys & Girls Club",
+                    "brand:wikidata": "Q2923055",
+                    "geometry": "center",
+                    "building": "yes",
+                    "social_facility": "outreach",
+                    "amenity": "social_facility",
+                    "id": "way/762461812"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.418262,
+                        44.261054
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762461812"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "alt_name": "Kentucky Fried Chicken",
+                    "cuisine": "chicken",
+                    "brand": "KFC",
+                    "name": "KFC",
+                    "brand:wikidata": "Q524757",
+                    "geometry": "center",
+                    "building": "yes",
+                    "takeaway": "yes",
+                    "amenity": "fast_food",
+                    "website": "https://locations.kfc.com/wi/appleton/111-e-wisconsin-ave",
+                    "id": "way/762469250"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.405494,
+                        44.272733
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762469250"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "addr:housenumber": "131",
+                    "addr:state": "WI",
+                    "name": "Frio Mexican Treats",
+                    "addr:street": "West Wisconsin Avenue",
+                    "geometry": "center",
+                    "building": "yes",
+                    "addr:city": "Appleton",
+                    "addr:postcode": "54911",
+                    "amenity": "ice_cream",
+                    "id": "way/762469401"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.407016,
+                        44.272767
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762469401"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/762474021",
+                    "amenity": "place_of_worship",
+                    "building": "church",
+                    "denomination": "baptist",
+                    "name": "Victory Baptist Church",
+                    "religion": "christian",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.416022,
+                        44.26946
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762474021"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "cuisine": "burger",
+                    "brand": "Burger King",
+                    "name": "Burger King",
+                    "brand:wikidata": "Q177054",
+                    "geometry": "center",
+                    "building": "yes",
+                    "takeaway": "yes",
+                    "amenity": "fast_food",
+                    "id": "way/762474398"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.420018,
+                        44.272624
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762474398"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "cuisine": "sandwich",
+                    "brand": "Subway",
+                    "name": "Subway",
+                    "brand:wikidata": "Q244457",
+                    "geometry": "center",
+                    "building": "yes",
+                    "takeaway": "yes",
+                    "amenity": "fast_food",
+                    "website": "https://restaurants.subway.com/united-states/wi/appleton/833-w-wisconsin-ave",
+                    "id": "way/762474728"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.418671,
+                        44.272665
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/762474728"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/784955047",
+                    "amenity": "fuel",
+                    "brand": "Kwik Trip",
+                    "brand:wikidata": "Q6450420",
+                    "name": "Kwik Trip",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.415079,
+                        44.264445
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/784955047"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "id": "way/847833943",
+                    "amenity": "social_facility",
+                    "building": "yes",
+                    "name": "Eagle Point Memory Care",
+                    "social_facility": "nursing_home",
+                    "social_facility:for": "senior",
+                    "geometry": "center"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.391372,
+                        44.260018
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/847833943"
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "operator:wikipedia": "en:United States Postal Service",
+                    "alt_name": "Appleton Post Office",
+                    "branch": "Appleton, WI",
+                    "operator": "United States Postal Service",
+                    "operator:short": "USPS",
+                    "gnis:county_id": "087",
+                    "brand": "United States Post Office",
+                    "name": "Mitchell F. Lundgaard Post Office",
+                    "gnis:feature_id": "1851379",
+                    "brand:wikidata": "Q668687",
+                    "operator:type": "public",
+                    "operator:wikidata": "Q668687",
+                    "gnis:state_id": "55",
+                    "geometry": "center",
+                    "amenity": "post_office",
+                    "id": "way/887359907",
+                    "ele": "239",
+                    "gnis:created": "09/02/1999"
+                },
+                "geometry": {
+                    "coordinates": [
+                        -88.411944,
+                        44.264862
+                    ],
+                    "type": "Point"
+                },
+                "id": "way/887359907"
+            }
+        ]
+    };
+
+    const filterGroup = document.getElementById('filter-group');
     const map = new mapboxgl.Map({
         container: 'map',
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
         style: 'mapbox://styles/leumas1231/clt967hee00t201qp8yc3g4aq/draft',
         center: [-88.407059, 44.261614],
-        zoom: 10.7
+        zoom: 11.15
+    });
+
+    map.on('load', () => {
+        // Add a GeoJSON source containing place coordinates and information.
+        map.addSource('places', {
+            'type': 'geojson',
+            'data': places
+        });
+        const amenities = ['bar', 'restaurant', 'cafe', 'theatre', 'bank', 'church', 'library', 'fastfood', 'gas', 'icecream', 'postoffice'];
+
+        for (const feature of places.features) {
+            const symbol = feature.properties.amenity;
+            const layerID = `poi-${symbol}`;
+
+            // Add a layer for this symbol type if it hasn't been added already.
+            if (!map.getLayer(layerID)) {
+                map.addLayer({
+                    'id': layerID,
+                    'type': 'symbol',
+                    'source': 'places',
+                    'layout': {
+                        // These icons are a part of the Mapbox Light style.
+                        // To view all images available in a Mapbox style, open
+                        // the style in Mapbox Studio and click the "Images" tab.
+                        // To add a new image to the style at runtime see
+                        // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+                        'icon-image': `${symbol}`,
+                        'icon-allow-overlap': true
+                    },
+                    'filter': ['==', 'amenity', symbol]
+                });
+
+                // Add checkbox and label elements for the layer.
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = layerID;
+                input.checked = false;
+                filterGroup.appendChild(input);
+
+                const label = document.createElement('label');
+                label.setAttribute('for', layerID);
+                label.textContent = symbol;
+                filterGroup.appendChild(label);
+
+                // When the checkbox changes, update the visibility of the layer.
+                input.addEventListener('change', (e) => {
+                    map.setLayoutProperty(
+                        layerID,
+                        'visibility',
+                        e.target.checked ? 'none' : 'visible'
+                    );
+                });
+
+            }
+
+        }
+
+
     });
 
     map.on('click', (event) => {
@@ -34,8 +2980,6 @@
         }
         const feature = features[0];
         let popupContent = `<h3>${feature.properties.name}</h3>`;
-
-        // Look for if each feature exists
         if (feature.properties.website) {
             popupContent += `<p>Website: <a href="${feature.properties.website}" target="_blank">${feature.properties.website}</a></p>`;
         }
@@ -52,36 +2996,17 @@
             popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
         }
 
-        // Get the location id to split out the number
-        let locationId = feature.properties['@@id'];
-        // Split the URL by '/'
-        const parts = locationId.split('/');
-        console.log(parts);
-        // Get the last part, which is the ID
-        const formattedId = parts[1];
-
-        // Added the location ID to the pop up
-        if (feature.properties["@@id"]) {
-            popupContent += `<p>Location ID: ${formattedId}</p>`;
-        }
-
-
-
-        popupContent += `<p><a href="/Home/AddToTrip/${formattedId}" target="_blank">Add To Trip</a></p>`;
+        popupContent += `<p><a href="/Home/AddToTrip/${feature.properties.id}" target="_blank">Add To Trip</a></p>`;
         const popup = new mapboxgl.Popup({ offset: [0, -15] })
-            // Set the placement of the mapbox
             .setLngLat(feature.geometry.coordinates)
-            // Set the content of the pop up box
             .setHTML(popupContent)
-            // Add it to the map
             .addTo(map);
     });
-    function showMoreInfo(feature) {
-        // Serialize the feature object as JSON and encode it for URL
-        const featureJson = encodeURIComponent(JSON.stringify(feature));
-        // Redirect the user to the "Test" page with the serialized feature object as a query parameter
-        window.location.href = `/Home/Test?feature=${featureJson}`;
-    }
 
-
+    // Toggle the visibility of filter checkboxes
+    const toggleFiltersButton = document.getElementById('toggle-filters');
+    toggleFiltersButton.addEventListener('click', () => {
+        const filterGroup = document.getElementById('filter-group');
+        filterGroup.style.display = filterGroup.style.display === 'none' ? 'block' : 'none';
+    });
 </script>
