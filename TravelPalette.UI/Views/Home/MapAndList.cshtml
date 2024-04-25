@@ -1,9 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="map-container">
-
-
+<div class="map-container" id="map">
 </div>
 <div class="list-container">
     <div class="info-container">Container 1</div>
@@ -16,3 +14,74 @@
     <div class="info-container">Container 8</div>
     <div class="info-container">Container 9</div>
 </div>
+
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/leumas1231/clt967hee00t201qp8yc3g4aq/draft',
+        center: [-88.407059, 44.261614],
+        zoom: 10.7
+    });
+
+    map.on('click', (event) => {
+        const features = map.queryRenderedFeatures(event.point, {
+            layers: ['bar', 'restaurant', 'cafe', 'theatre', 'bank', 'church', 'library', 'fastfood', 'gas', 'icecream', 'postoffice']
+        });
+        if (!features.length) {
+            return;
+        }
+        const feature = features[0];
+        let popupContent = `<h3>${feature.properties.name}</h3>`;
+
+        // Look for if each feature exists
+        if (feature.properties.website) {
+            popupContent += `<p>Website: <a href="${feature.properties.website}" target="_blank">${feature.properties.website}</a></p>`;
+        }
+        if (feature.properties['addr:street']) {
+            popupContent += `<p>Address: ${feature.properties['addr:street']}, ${feature.properties['addr:housenumber']}</p>`;
+        }
+        if (feature.properties['addr:city']) {
+            popupContent += `<p>${feature.properties['addr:city']}, ${feature.properties['addr:state']} ${feature.properties['addr:postcode']}</p>`;
+        }
+        if (feature.properties.cuisine) {
+            const capitalizedCuisine = feature.properties.cuisine.charAt(0).toUpperCase() + feature.properties.cuisine.slice(1);
+            popupContent += `<p>Cuisine: ${capitalizedCuisine}</p>`;
+            // Need below to insert ID into database, to save trips
+            popupContent += `<p><a href="/Home/Test?feature=${encodeURIComponent(JSON.stringify(feature))}" target="_blank">More Info</a></p>`;
+        }
+
+        // Get the location id to split out the number
+        let locationId = feature.properties['@@id'];
+        // Split the URL by '/'
+        const parts = locationId.split('/');
+        console.log(parts);
+        // Get the last part, which is the ID
+        const formattedId = parts[1];
+
+        // Added the location ID to the pop up
+        if (feature.properties["@@id"]) {
+            popupContent += `<p>Location ID: ${formattedId}</p>`;
+        }
+
+
+
+        popupContent += `<p><a href="/Home/AddToTrip/${formattedId}" target="_blank">Add To Trip</a></p>`;
+        const popup = new mapboxgl.Popup({ offset: [0, -15] })
+            // Set the placement of the mapbox
+            .setLngLat(feature.geometry.coordinates)
+            // Set the content of the pop up box
+            .setHTML(popupContent)
+            // Add it to the map
+            .addTo(map);
+    });
+    function showMoreInfo(feature) {
+        // Serialize the feature object as JSON and encode it for URL
+        const featureJson = encodeURIComponent(JSON.stringify(feature));
+        // Redirect the user to the "Test" page with the serialized feature object as a query parameter
+        window.location.href = `/Home/Test?feature=${featureJson}`;
+    }
+
+
+</script>
