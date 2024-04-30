@@ -187,6 +187,27 @@ ul {
     align-items: center;
     justify-content: center;
 }
+.hero-section,
+.search-container,
+.features-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px; 
+}
+
+.feature {
+    margin-top: 20px; 
+}
+
+.hero-section,
+.search-container,
+.features-section {
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto; 
+}
 
 .search-box {
     background-color: #b3cde0;
