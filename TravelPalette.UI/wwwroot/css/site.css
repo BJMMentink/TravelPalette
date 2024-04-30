@@ -63,7 +63,7 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
     top: 10px;
     left: 10px;
     z-index: 1;
-    background-color: #3386c0;
+    background-color: #6497b1;
     color: #fff;
     padding: 10px 20px; /* Increased padding for better visibility */
     cursor: pointer;
@@ -71,8 +71,9 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
 }
 
 .filter-group {
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font: 12px/20px  Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     font-weight: 600;
+    font-size: 16px;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -82,7 +83,7 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
     color: #333; /* Changed text color for better readability */
     display: none; /* Initially hide */
     overflow-y: auto; /* Add vertical scroll when necessary */
-    max-height: 300px; /* Adjusted maximum height */
+    max-height: 500px; /* Adjusted maximum height */
     background-color: #fff; /* Added background color */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
@@ -115,16 +116,17 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
         }
 
         .filter-group input[type='checkbox'] + label {
-            background-color: #3386c0;
+            background-color: #6497b1;
             text-transform: capitalize;
         }
 
             .filter-group input[type='checkbox'] + label:hover,
             .filter-group input[type='checkbox']:checked + label {
-                background-color: #f5f5f5; /* Changed background color on hover/checked */
+                 /* Changed background color on hover/checked */
             }
 
                 .filter-group input[type='checkbox']:checked + label:before {
                     content: '✔';
+                    color: white;
                     margin-right: 5px;
                 }
