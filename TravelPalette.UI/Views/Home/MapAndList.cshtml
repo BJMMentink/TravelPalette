@@ -2925,6 +2925,7 @@
         for (const feature of places.features) {
             const symbol = feature.properties.amenity;
             const layerID = `poi-${symbol}`;
+             const displayName = symbol.replace('_', ' '); // Replace underscores with spaces
 
             // Add a layer for this symbol type if it hasn't been added already.
             if (!map.getLayer(layerID)) {
@@ -2953,7 +2954,7 @@
 
                 const label = document.createElement('label');
                 label.setAttribute('for', layerID);
-                label.textContent = symbol;
+                label.textContent = displayName; // Use the modified display name
                 filterGroup.appendChild(label);
 
                 // When the checkbox changes, update the visibility of the layer.

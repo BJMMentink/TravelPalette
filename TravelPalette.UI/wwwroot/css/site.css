@@ -65,7 +65,7 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
     z-index: 1;
     background-color: #3386c0;
     color: #fff;
-    padding: 10px;
+    padding: 10px 20px; /* Increased padding for better visibility */
     cursor: pointer;
     border-radius: 5px;
 }
@@ -78,18 +78,28 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
     right: 10px;
     z-index: 1;
     border-radius: 3px;
-    width: 120px;
-    color: #fff;
+    width: auto; /* Let the width adjust automatically based on content */
+    color: #333; /* Changed text color for better readability */
     display: none; /* Initially hide */
+    overflow-y: auto; /* Add vertical scroll when necessary */
+    max-height: 300px; /* Adjusted maximum height */
+    background-color: #fff; /* Added background color */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
+    .filter-group label {
+        display: block;
+        padding: 10px 20px; /* Increased padding for better spacing */
+        cursor: pointer;
+        border-bottom: 1px solid #eee; /* Added border between items */
+    }
 
     .filter-group input[type='checkbox']:first-child + label {
         border-radius: 3px 3px 0 0;
     }
 
     .filter-group label:last-child {
+        border-bottom: none; /* Removed border from last item */
         border-radius: 0 0 3px 3px;
-        border: none;
     }
 
     .filter-group input[type='checkbox'] {
@@ -111,7 +121,7 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
 
             .filter-group input[type='checkbox'] + label:hover,
             .filter-group input[type='checkbox']:checked + label {
-                background-color: #4ea0da;
+                background-color: #f5f5f5; /* Changed background color on hover/checked */
             }
 
                 .filter-group input[type='checkbox']:checked + label:before {
