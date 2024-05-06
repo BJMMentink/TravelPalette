@@ -10,7 +10,7 @@ namespace TravelPalette.UI.Controllers
         // GET: UserListController
         public IActionResult Index()
         {
-            int id = 0; 
+            int id; 
             try
             {
 
@@ -41,8 +41,11 @@ namespace TravelPalette.UI.Controllers
         // GET: UserListController/Create
         public IActionResult Create()
         {
+            int id;
+
+            id = int.Parse(HttpContext.Session.GetString("UserId"));
             ViewBag.Title = "Create a List";
-            return View();
+            return View(UserListManager.LoadUserId(id));
         }
 
         // POST: UserListController/Create
