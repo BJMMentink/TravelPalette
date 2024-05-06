@@ -28,4 +28,11 @@
     <Folder Include="Views\Map\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\ListTest.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -35,7 +35,7 @@ namespace TravelPalette.UI.Controllers
 
         public IActionResult Fun()
         {
-            return View("MapAndList");
+            return View("ListTest");
         }
 
         public IActionResult Privacy()
