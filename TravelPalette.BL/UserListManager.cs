@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -9,6 +10,33 @@ namespace TravelPalette.BL
 {
     public class UserListManager
     {
+        public static int Insert(int listId,
+                                 int userId,
+                                 string listName,
+                                 ref int id,
+                                 bool rollback = false)
+        {
+            try
+            {
+                UserList userlist = new UserList
+                {
+                    ListId = listId,
+                    UserId = userId,
+                    ListName = listName,
+                };
+                int results = Insert(userlist, rollback);
+
+                // IMPORTANT - BACKFILL THE REFERENCE ID
+                id = userlist.Id;
+
+                return results;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public static int Insert(UserList userList, bool rollback = false)
         {
             try
@@ -167,6 +195,43 @@ namespace TravelPalette.BL
                 throw;
             }
         }
+        public static List<UserList> LoadByUserId(int userId)
+        {
+            try
+            {
+
+                List<UserList> rows = new List<UserList>();
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                {
+                    var results = (from ul in dc.tblUserLists
+                                   join u in dc.tblUsers on ul.UserId equals u.Id
+                                   where ul.UserId == userId && userId == u.Id
+                                   select new
+                                   {
+                                       ul.Id,
+                                       ul.UserId,
+                                       ul.ListName,
+                                       ul.ListId
+                                   }).ToList();
+                    results.ForEach(r => rows.Add(
+                         new UserList
+                         {
+                             Id = r.Id,
+                             UserId = r.UserId,
+                             ListId = r.ListId,
+                             ListName = r.ListName,
+                         }
+                        ));
+                }
+                return rows;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 
 }
