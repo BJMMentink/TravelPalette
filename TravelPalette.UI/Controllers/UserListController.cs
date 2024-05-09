@@ -40,25 +40,26 @@ namespace TravelPalette.UI.Controllers
         }
 
         // GET: UserListController/Create
-        public IActionResult Create()
+        public IActionResult Create(UserList model)
         {
             int userId;
 
             userId = int.Parse(HttpContext.Session.GetString("UserId"));
 
-            UserListVM userListVM = new UserListVM(userId);
+            model.UserId = userId;
+
 
             ViewBag.Title = "Create a List";
-            return View(userListVM);
+            return View(model);
         }
 
         // POST: UserListController/Create
         [HttpPost]
-        public IActionResult Create(UserListVM userListVM, bool rollback = false)
+        public IActionResult Create(UserList userList, bool rollback = false)
         {
             try
             {
-                int result = UserListManager.Insert(userListVM.UserList, rollback);
+                int result = UserListManager.Insert(userList, rollback);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -8,10 +8,5 @@ namespace TravelPalette.UI.ViewModels
         public User User { get; set; }
         public UserList UserList { get; set; }
 
-        public UserListVM(int userId)
-        {
-            User = UserManager.LoadById(userId);
-            UserList = new UserList();
-        }  
     }
 }

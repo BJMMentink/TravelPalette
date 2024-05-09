@@ -1,4 +1,5 @@
-﻿@model TravelPalette.UI.ViewModels.UserListVM
+﻿@model TravelPalette.BL.Models.UserList
+
 
 @{
     ViewData["Title"] = "Create";
@@ -9,13 +10,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input hidden asp-for="UserList.Id" class="form-control" />
-            <input hidden asp-for="UserList.UserId" class="form-control" value="@Model.User.Id" />
-            <input hidden asp-for="UserList.ListId" class="form-control" value=""/>
+            <input hidden asp-for="Id" class="form-control" />
+            <input hidden asp-for="UserId" class="form-control" />
+            <input hidden asp-for="ListId" class="form-control" value=""/>
             <div class="form-group">
-                <label asp-for="UserList.ListName" class="control-label"></label>
-                <input asp-for="UserList.ListName" class="form-control" />
-                <span asp-validation-for="UserList.ListName" class="text-danger"></span>
+                <label asp-for="ListName" class="control-label"></label>
+                <input asp-for="ListName" class="form-control" />
+                <span asp-validation-for="ListName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
