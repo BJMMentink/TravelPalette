@@ -48,11 +48,11 @@
 
 
     .heading {
-        background: #fff;
         border-bottom: 1px solid #eee;
         height: 60px;
         line-height: 60px;
         padding: 0 10px;
+
     }
 
     .listings {
@@ -3338,17 +3338,20 @@
 
 
     function buildLocationList(places) {
+        const filterCheckboxes = document.querySelectorAll('#filter-group input[type="checkbox"]');
+
         for (const store of places.features) {
-                        
-            /* Add a new listing section to the sidebar. */
+            const listingAmenity = store.properties.amenity;
+
+            // Add a new listing section to the sidebar.
             const listings = document.getElementById('listings');
             const listing = listings.appendChild(document.createElement('div'));
-            /* Assign a unique `id` to the listing. */
+            // Assign a unique `id` to the listing.
             listing.id = `listing-${store.properties.id}`;
-            /* Assign the `item` class to each listing for styling. */
+            // Assign the `item` class to each listing for styling.
             listing.className = 'item';
 
-            /* Add the link to the individual listing created above. */
+            // Add the link to the individual listing created above.
             const link = listing.appendChild(document.createElement('a'));
             link.href = '#';
             link.className = 'title';
@@ -3356,7 +3359,7 @@
             link.innerHTML = `${store.properties.name}`;
 
             const details = listing.appendChild(document.createElement('div'));
-            details.innerHTML = `${store.properties.amenity}`;
+            details.innerHTML = `${listingAmenity}`;
             if (store.properties.cuisine) {
                 details.innerHTML += ` &middot; ${store.properties.cuisine}`;
             }
@@ -3371,6 +3374,19 @@
             if (store.properties.phone) {
                 details.innerHTML += ` &middot; ${store.properties.phone}`;
             }
+
+            // Function to update visibility based on selected filters
+            const updateVisibility = () => {
+                const isChecked = Array.from(filterCheckboxes).some(checkbox => checkbox.checked && checkbox.id === `poi-${listingAmenity}`);
+                listing.style.display = isChecked ? 'block' : 'none';
+            };
+
+            // Attach event listener to each checkbox
+            filterCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateVisibility);
+            });
+
+            // Event listener for individual listing click
             link.addEventListener('click', function () {
                 for (const feature of places.features) {
                     if (this.id === `link-${feature.properties.id}`) {
@@ -3384,8 +3400,12 @@
                 }
                 this.parentNode.classList.add('active');
             });
+
+            // Initially hide the listing
+            listing.style.display = 'none';
         }
     }
+
 
     function flyToStore(currentFeature) {
         map.flyTo({
