@@ -178,7 +178,7 @@ namespace TravelPalette.BL
                                           u.Email,
                                       })
 
-                                         .FirstOrDefault();
+                                         .FirstOrDefault(s => s.Id == id);
 
                         if (entity != null)
                         {

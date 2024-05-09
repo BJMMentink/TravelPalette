@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\UserList\Create.cshtml" />
+    <None Include="Views\UserList\Delete.cshtml" />
+    <None Include="Views\UserList\Details.cshtml" />
+    <None Include="Views\UserList\Edit.cshtml" />
+    <None Include="Views\UserList\Index.cshtml" />
     <None Include="wwwroot\css\styles.css" />
   </ItemGroup>
 
