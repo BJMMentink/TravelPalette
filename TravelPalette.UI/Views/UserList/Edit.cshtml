@@ -15,19 +15,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input hidden asp-for="Id" class="form-control" />
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="ListName" class="control-label"></label>
+                    <input asp-for="ListName" class="form-control" />
+                    <span asp-validation-for="ListName" class="text-danger"></span>
+                </div>
                 <label asp-for="ListId" class="control-label"></label>
                 <input asp-for="ListId" class="form-control" />
                 <span asp-validation-for="ListId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ListName" class="control-label"></label>
-                <input asp-for="ListName" class="form-control" />
-                <span asp-validation-for="ListName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

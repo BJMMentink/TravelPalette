@@ -5,39 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>UserList</h4>
-    <hr />
+    <h4>
+        @Html.DisplayFor(model => model.ListName)
+    </h4>
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ListId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ListId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ListName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ListName)
-        </dd>
     </dl>
 </div>
-<div>
+<div id="logout">
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
