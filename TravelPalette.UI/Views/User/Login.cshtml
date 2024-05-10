@@ -4,6 +4,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .form-group {
+        margin-left: 0; 
+    }
+
+    .form-group.password {
+        margin-left: 10px; 
+    }
+    .form-group.submit {
+        margin-left: 125px; 
+    }
+</style>
+
 <div class="row m-2">
     <div class="col-md-4">
         <form asp-action="Login">
@@ -14,12 +27,12 @@
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div><br />
-            <div class="form-group">
+            <div class="form-group password">
                 <label asp-for="Password" class="control-label"></label>
                 <input type="password" asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div><br />
-            <div class="form-group mt-2">
+            <div class="form-group submit mt-2">
                 <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </form>

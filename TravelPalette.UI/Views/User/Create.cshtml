@@ -4,6 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    /* Custom CSS to ensure consistent margin for form groups */
+    .form-group {
+        margin-left: 0;
+    }
+
+        .form-group.email {
+            margin-left: 35px;
+        }
+
+        .form-group.password {
+            margin-left: 10px;
+        }
+
+        .form-group.last {
+            margin-left: 2px;
+        }
+
+        .form-group.submit {
+            margin-left: 100px;
+        }
+</style>
+
 <div class="row m-2">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -14,12 +37,12 @@
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div> <br />
-            <div class="form-group">
+            <div class="form-group password">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div><br />
-            <div class="form-group">
+            <div class="form-group email">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
@@ -29,12 +52,12 @@
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div><br />
-            <div class="form-group">
+            <div class="form-group last">
                 <label asp-for="LastName" class="control-label"></label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div><br />
-            <div class="form-group m-2">
+            <div class="form-group submit m-2">
                 <input type="submit" value="Create Account" class="btn btn-primary" />
             </div>
             <br />
