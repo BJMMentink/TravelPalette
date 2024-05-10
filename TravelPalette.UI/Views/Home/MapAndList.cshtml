@@ -1,5 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var userId = HttpContextAccessor.HttpContext?.Session.GetString("UserId");
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <div class="map-container" id="map">
@@ -3046,10 +3051,20 @@
                 details.innerHTML += ` &middot; ${store.properties.phone}`;
             }
 
-            // Add a button to each listing
-            const addbtn = listing.appendChild(document.createElement('button'));
+            // Add a button to each listing if UserId is set
+            @{
+                bool hide;
+                if (String.IsNullOrEmpty(userId))
+                {
+                    hide = true;
+                }
+            }
+            var addbtn = listing.appendChild(document.createElement('button'));
             addbtn.innerText = 'Add to List';
             addbtn.href = "#";
+            
+            
+            
 
             // Function to update visibility based on selected filters
             const updateVisibility = () => {
