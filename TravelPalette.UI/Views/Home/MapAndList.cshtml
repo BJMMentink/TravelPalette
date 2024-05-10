@@ -10,7 +10,9 @@
 </div>
 <div class="list-container">
     <div class="info-container">
-        <div id="listings" class="listings"></div>
+        <div id="listings" class="listings">
+
+        </div>
     </div>
 </div>
 
@@ -3044,6 +3046,11 @@
                 details.innerHTML += ` &middot; ${store.properties.phone}`;
             }
 
+            // Add a button to each listing
+            const addbtn = listing.appendChild(document.createElement('button'));
+            addbtn.innerText = 'Add to List';
+            addbtn.href = "#";
+
             // Function to update visibility based on selected filters
             const updateVisibility = () => {
                 const isChecked = Array.from(filterCheckboxes).some(checkbox => checkbox.checked && checkbox.id === `poi-${listingAmenity}`);
@@ -3068,6 +3075,15 @@
                     activeItem[0].classList.remove('active');
                 }
                 this.parentNode.classList.add('active');
+            });
+
+            // Event listener for individual button click
+            addbtn.addEventListener('click', function () {
+                for (const feature of places.features) {
+                    if (this.id === `link-${feature.properties.id}`) {
+                        addToList(feature);
+                    }
+                }
             });
 
             // Initially hide the listing
@@ -3096,4 +3112,7 @@
             .setHTML(`<h3>${currentFeature.properties.name}</h3><h4>${address}</h4>`)
             .addTo(map);
     }
+
+    // function addToList(currentFeature) {
+    // }
 </script>
