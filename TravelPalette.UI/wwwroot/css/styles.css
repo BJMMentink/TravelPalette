@@ -117,14 +117,14 @@ nav ul {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    max-height: 70vh;
-    overflow-y: auto; /* Scrolling */
+    height: 70vh;
+    overflow-y: auto;
     background-color: whitesmoke;
 }
 
 
 .listonly {
-    height: 70%;
+    height: 100%;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -141,7 +141,7 @@ nav ul {
 
 .login {
     background-color: #011f4b;
-    min-height: 12vh;
+    height: 10vh;
     color: whitesmoke;
 }
 
@@ -183,7 +183,7 @@ ul {
 
 .nav {
     background-color: #005b96;
-    height: 6rem;
+    height: 8vh;
     align-items: center;
     justify-content: center;
 }
@@ -257,13 +257,13 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
 
 
 #map {
-
+    height: 70vh;
 }
 
 .mapboxgl-popup-content {
     max-width: 300px;
     overflow-wrap: break-word;
-    padding: 10px;
+    padding: 25px 10px 15px 10px;
     line-height: 1.5;
 }
 
@@ -343,42 +343,88 @@ div.dataTables_filter, div.dataTables_lengthm, .dataTables_wrapper {
     line-height: 60px;
     padding: 0 10px;
 }
-
-.listings {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    padding-bottom: 60px;
+.list-container {
+    display: flex;
 }
 
-    .listings .item {
+.info-container {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.header {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.list-container {
+    display: flex;
+}
+
+.info-container {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+}
+
+.header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    font-size: 25px;
+}
+
+.userList,
+.listings {
+    height: calc(100% - 30px);
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.userList {
+    border-top: none; 
+}
+
+    .listings .item,
+    .userList .item {
         border-bottom: 2px solid #eee;
         padding: 10px;
         text-decoration: none;
     }
 
-        .listings .item:last-child {
+        .listings .item:last-child,
+        .userList .item:last-child {
             border-bottom: none;
         }
 
-        .listings .item .title {
+        .listings .item .title,
+        .userList .item .title {
             display: block;
             color: #00853e;
             font-weight: 700;
         }
 
-            .listings .item .title small {
+            .listings .item .title small,
+            .userList .item .title small {
                 font-weight: 400;
             }
 
             .listings .item.active .title,
-            .listings .item .title:hover {
+            .listings .item .title:hover,
+            .userList .item.active .title,
+            .userList .item .title:hover {
                 color: #8cc63f;
             }
 
-        .listings .item.active {
+        .listings .item.active,
+        .userList .item.active {
             background-color: #f8f8f8;
         }
+
 
 ::-webkit-scrollbar {
     width: 3px;

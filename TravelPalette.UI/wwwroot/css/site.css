@@ -31,6 +31,7 @@ li.nav-item a:hover {
 
 footer {
     background-color: white;
+    height: 5vh;
 }
 
 footer.container {
