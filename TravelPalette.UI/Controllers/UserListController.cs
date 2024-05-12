@@ -115,5 +115,39 @@ namespace TravelPalette.UI.Controllers
                 return View(list);
             }
         }
+
+        public IActionResult AddToList(int id, string businessName, string amenity, double latitude, double longitude)
+        {
+            int userId;
+            userId = int.Parse(HttpContext.Session.GetString("UserId"));
+
+            try
+            {
+
+                ListItem listItem = new ListItem() { Id = userId, LocationId = id };
+                var listItemResult = ListItemManager.Insert(listItem);
+                
+                Location location = new Location()
+                { 
+                    Id = -1,
+                    AddressId = id,
+                    Description = amenity,
+                    BusinessName = businessName,
+                    Coordinates = latitude + ", " + longitude,
+                    PhoneNumber = "N/A"
+                };
+                
+                var locationResult = LocationManager.Insert(location);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+
+
+            return Json(new { success = true, message = "Data received successfully!" });
+        }
     }
 }

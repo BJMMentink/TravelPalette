@@ -20,7 +20,7 @@ namespace TravelPalette.BL
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
                     tblListItem entity = new tblListItem();
-                    entity.Id = dc.tblListItems.Any() ? dc.tblListItems.Max(li => li.Id) + 1 : 1;
+                    entity.Id = listItem.Id;
                     entity.LocationId = listItem.LocationId;
 
                     dc.tblListItems.Add(entity);

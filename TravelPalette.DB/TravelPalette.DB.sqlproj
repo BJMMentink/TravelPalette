@@ -89,4 +89,7 @@
     <None Include="local.publish.xml" />
     <None Include="remote.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TravelPalette.DB.refactorlog" />
+  </ItemGroup>
 </Project>

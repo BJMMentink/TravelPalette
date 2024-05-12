@@ -1,11 +1,17 @@
 ﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.JSInterop
+@using TravelPalette.BL;
+@using TravelPalette.BL.Models;
+@inject IJSRuntime JS
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var userId = HttpContextAccessor.HttpContext?.Session.GetString("UserId");
+    string userId = HttpContextAccessor.HttpContext?.Session.GetString("UserId");
+    
 }
+
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <div class="map-container" id="map">
 <!-- Add a button to toggle filters -->
@@ -19,7 +25,7 @@
         <div id="listings" class="listings"></div>
     </div>
     <div class="info-container">
-        <div class="header">User List</div>
+        <div class="header">My List</div>
         <div id="userList" class="userList"></div>
     </div>
 </div>
@@ -3055,17 +3061,11 @@
                 details.innerHTML += ` &middot; ${store.properties.phone}`;
             }
 
-            // Add a button to each listing if UserId is set
-            @{
-                bool hide;
-                if (String.IsNullOrEmpty(userId))
-                {
-                    hide = true;
-                }
-            }
+            // Add a button to each listing
+    
             var addbtn = listing.appendChild(document.createElement('button'));
             addbtn.innerText = 'Add to List';
-            addbtn.href = "#";
+            addbtn.id = `addbtn-${store.properties.id}`;
             addbtn.classList.add('addButton');
             
             
@@ -3100,12 +3100,11 @@
             // Event listener for individual button click
             addbtn.addEventListener('click', function () {
                 for (const feature of places.features) {
-                    if (this.id === `link-${feature.properties.id}`) {
+                    if (this.id === `addbtn-${feature.properties.id}`) {
                         addToList(feature);
                     }
                 }
             });
-
             // Initially hide the listing
             listing.style.display = 'none';
         }
@@ -3133,6 +3132,40 @@
             .addTo(map);
     }
 
-    // function addToList(currentFeature) {
-    // }
+    function addToList(feature) {
+
+        // Get all the guaranteed listing properties
+        var nodeId = feature.properties.id;     // Gets the Id of the listing
+        var id = Number(nodeId.slice(5));               // Returns just the numbers
+        console.log(id);
+        var buisnessName = feature.properties.name;
+        var amenity = feature.properties.amenity;
+
+        var coordinates = feature.geometry.coordinates;  
+        var latitude = coordinates[1];
+        var longitude = coordinates[0];
+
+        var locationData = {
+            Id: id,
+            businessName: buisnessName,
+            amenity: amenity,
+            latitude: latitude,
+            longitude: longitude
+
+        };
+
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddToList", "UserList")', // Replace with your actual route
+            data: locationData, // Pass the data to the Razor function
+            success: function (response) {
+                // Handle the server response (if needed)
+                console.log('Server response:', response);
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
 </script>

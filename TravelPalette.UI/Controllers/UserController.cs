@@ -48,7 +48,16 @@ namespace TravelPalette.UI.Controllers
         {
             try
             {
-                int result = UserManager.Insert(user);
+                int userResult = UserManager.Insert(user);
+
+                UserList userList = new UserList();
+                userList.Id = -1;
+                userList.ListName = user.FirstName + "'s List";
+                userList.UserId = user.Id;
+                userList.ListId = userList.Id;
+
+                int listResult = UserListManager.Insert(userList);
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)

@@ -50,7 +50,7 @@ namespace TravelPalette.BL
                     tblUserList entity = new tblUserList();
                     entity.Id = dc.tblUserLists.Any() ? dc.tblUserLists.Max(ul => ul.Id) + 1 : 1;
                     entity.UserId = userList.UserId;
-                    entity.ListId = userList.ListId;
+                    entity.ListId = entity.Id;
                     entity.ListName = userList.ListName;
 
                     dc.tblUserLists.Add(entity);
