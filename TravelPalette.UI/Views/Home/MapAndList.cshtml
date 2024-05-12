@@ -3135,9 +3135,9 @@
     function addToList(feature) {
 
         // Get all the guaranteed listing properties
-        var nodeId = feature.properties.id;     // Gets the Id of the listing
+        var nodeId = feature.properties.id;             // Gets the Id of the listing
         var id = Number(nodeId.slice(5));               // Returns just the numbers
-        console.log(id);
+
         var buisnessName = feature.properties.name;
         var amenity = feature.properties.amenity;
 
@@ -3145,6 +3145,7 @@
         var latitude = coordinates[1];
         var longitude = coordinates[0];
 
+        // Object to send to the controller
         var locationData = {
             Id: id,
             businessName: buisnessName,
@@ -3154,13 +3155,12 @@
 
         };
 
-
+        // Sends our object to the UserList Controller
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("AddToList", "UserList")', // Replace with your actual route
-            data: locationData, // Pass the data to the Razor function
+            url: '@Url.Action("AddToList", "UserList")', 
+            data: locationData, 
             success: function (response) {
-                // Handle the server response (if needed)
                 console.log('Server response:', response);
             },
             error: function (error) {

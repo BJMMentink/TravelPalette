@@ -177,6 +177,42 @@ namespace TravelPalette.BL
                 throw;
             }
         }
+        public static List<UserList> LoadByUserId(int userId)
+        {
+            try
+            {
+
+                List<UserList> rows = new List<UserList>();
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                {
+                    var results = (from ul in dc.tblUserLists
+                                   join u in dc.tblUsers on ul.UserId equals u.Id
+                                   where ul.UserId == userId && userId == u.Id
+                                   select new
+                                   {
+                                       ul.Id,
+                                       ul.UserId,
+                                       ul.ListName,
+                                       ul.ListId
+                                   }).ToList();
+                    results.ForEach(r => rows.Add(
+                         new UserList
+                         {
+                             Id = r.Id,
+                             UserId = r.UserId,
+                             ListId = r.ListId,
+                             ListName = r.ListName,
+                         }
+                        ));
+                }
+                return rows;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 
 }

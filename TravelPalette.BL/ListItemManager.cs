@@ -84,7 +84,7 @@ namespace TravelPalette.BL
 
                     if (entity != null)
                     {
-                        dc.tblListItems.Remove(entity);
+                        dc.tblListItems.RemoveRange(entity);
                         result = dc.SaveChanges();
                     }
                     else

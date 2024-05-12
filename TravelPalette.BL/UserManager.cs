@@ -37,7 +37,10 @@ namespace TravelPalette.BL
             {
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
-                    dc.tblUsers.RemoveRange(dc.tblUsers.ToList());
+                    var user = dc.tblUsers.FirstOrDefault(s => s.Id == id);
+
+                    dc.tblUsers.Remove(user);
+
                     return dc.SaveChanges();
                 }
             }

@@ -34,6 +34,7 @@ namespace TravelPalette.UI.Controllers
             }
             else
             {
+                HttpContext.Session.SetObject("UserId", string.Empty);
                 HttpContext.Session.SetObject("FullName", string.Empty);
             }
         }
@@ -57,7 +58,7 @@ namespace TravelPalette.UI.Controllers
                 userList.ListId = userList.Id;
 
                 int listResult = UserListManager.Insert(userList);
-
+                SetUser(user);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -136,6 +137,8 @@ namespace TravelPalette.UI.Controllers
             try
             {
                 int result = UserManager.Delete(id, rollback);
+                int listItemResult = ListItemManager.Delete(id, rollback);
+                int userListResutl = UserListManager.Delete(id, rollback);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
