@@ -242,6 +242,11 @@ ul {
     float: left;
 }
 
+#icons {
+    padding: 5px 0px 5px 10px;
+    float: right;
+}
+
 #username, #login, #logout {
     padding: 1rem;
     font-size: 1rem;
