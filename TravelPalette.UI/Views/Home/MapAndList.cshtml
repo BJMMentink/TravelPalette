@@ -3136,7 +3136,6 @@
 
         // Get all the guaranteed listing properties
         var nodeId = feature.properties.id;             // Gets the Id of the listing
-        var id = Number(nodeId.slice(5));               // Returns just the numbers
 
         var buisnessName = feature.properties.name;
         var amenity = feature.properties.amenity;
@@ -3147,7 +3146,7 @@
 
         // Object to send to the controller
         var locationData = {
-            Id: id,
+            Id: nodeId,
             businessName: buisnessName,
             amenity: amenity,
             latitude: latitude,
