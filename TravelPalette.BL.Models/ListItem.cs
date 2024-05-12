@@ -9,6 +9,6 @@ namespace TravelPalette.BL.Models
     public class ListItem
     {
         public int Id { get; set; }
-        public int LocationId { get; set; }
+        public string LocationId { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace TravelPalette.BL.Models
     public class Location
     {
         public int Id { get; set; }
-        public int AddressId { get; set; }
+        public string AddressId { get; set; }
         public string? Description { get; set; }
 
         [DisplayName("Business Name")]

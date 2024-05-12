@@ -116,20 +116,20 @@ namespace TravelPalette.UI.Controllers
             }
         }
 
-        public IActionResult AddToList(double id, string businessName, string amenity, double latitude, double longitude)
+        public IActionResult AddToList(string id, string businessName, string amenity, double latitude, double longitude)
         {
             int userId;
             userId = int.Parse(HttpContext.Session.GetString("UserId"));
 
             try
             {
-                ListItem listItem = new ListItem() { Id = userId, LocationId = (int)id };
+                ListItem listItem = new ListItem() { Id = userId, LocationId = id };
                 var listItemResult = ListItemManager.Insert(listItem);
                 
                 Location location = new Location()
                 { 
                     Id = -1,
-                    AddressId = (int)id,
+                    AddressId = id,
                     Description = amenity,
                     BusinessName = businessName,
                     Coordinates = latitude + ", " + longitude,
