@@ -16,6 +16,11 @@ namespace TravelPalette.BL
                 int results = 0;
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
+                    bool duplicateExists = dc.tblLocations.Any(l => l.AddressId == location.AddressId);
+                    if (duplicateExists)
+                    {
+                        return 0;
+                    }
                     IDbContextTransaction transaction = null;
                     if (rollback) transaction = dc.Database.BeginTransaction();
 
@@ -177,31 +182,34 @@ namespace TravelPalette.BL
                 throw;
             }
         }
-        public static List<UserList> LoadByUserId(int userId)
+        public static List<Location> LoadByUserId(int userId)
         {
             try
             {
 
-                List<UserList> rows = new List<UserList>();
+                List<Location> rows = new List<Location>();
                 using (TravelPaletteEntities dc = new TravelPaletteEntities())
                 {
                     var results = (from ul in dc.tblUserLists
-                                   join u in dc.tblUsers on ul.UserId equals u.Id
-                                   where ul.UserId == userId && userId == u.Id
+                                   join li in dc.tblListItems on ul.Id equals li.Id
+                                   join l in dc.tblLocations on li.LocationId equals l.AddressId
+                                   where ul.UserId == userId && userId == li.Id
                                    select new
                                    {
-                                       ul.Id,
-                                       ul.UserId,
-                                       ul.ListName,
-                                       ul.ListId
+                                       l.Id,
+                                       l.AddressId,
+                                       l.Description,
+                                       l.BusinessName,
+                                       l.Coordinates,
                                    }).ToList();
                     results.ForEach(r => rows.Add(
-                         new UserList
+                         new Location
                          {
                              Id = r.Id,
-                             UserId = r.UserId,
-                             ListId = r.ListId,
-                             ListName = r.ListName,
+                             AddressId = r.AddressId,
+                             Description = r.Description,
+                             BusinessName = r.BusinessName,
+                             Coordinates = r.Coordinates,
                          }
                         ));
                 }

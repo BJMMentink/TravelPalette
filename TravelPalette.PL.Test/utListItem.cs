@@ -16,7 +16,7 @@ namespace TravelPalette.PL.Test
         {
             tblListItem newItem = new tblListItem();
 
-            newItem.LocationId = 1; 
+            newItem.LocationId = "1"; 
 
             dc.tblListItems.Add(newItem);
 
@@ -32,7 +32,7 @@ namespace TravelPalette.PL.Test
 
             if (item != null)
             {
-                item.LocationId = 2;
+                item.LocationId = "2";
 
                 int rowsAffected = dc.SaveChanges();
 

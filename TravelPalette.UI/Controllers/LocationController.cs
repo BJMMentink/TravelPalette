@@ -13,7 +13,15 @@ namespace TravelPalette.UI.Controllers
         {
             return View(LocationManager.Load());
         }
-        
+
+        public IActionResult LoadByUserId()
+        {
+            int userId;
+            userId = int.Parse(HttpContext.Session.GetString("UserId"));
+            var data = LocationManager.LoadByUserId(userId);
+            return Json(data); 
+        }
+
         // GET: UserListController/Delete/5
         public IActionResult Delete(int id)
         {
@@ -37,5 +45,6 @@ namespace TravelPalette.UI.Controllers
                 return View(location);
             }
         }
+
     }
 }

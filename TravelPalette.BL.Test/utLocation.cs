@@ -26,7 +26,7 @@ namespace TravelPalette.BL.Test
             Location location = new Location
             {
                 Id = id,
-                AddressId = 99, // Test integer value
+                AddressId = "99", // Test value
                 Description = "Test",
                 BusinessName = "Test",
                 Coordinates = "Test",

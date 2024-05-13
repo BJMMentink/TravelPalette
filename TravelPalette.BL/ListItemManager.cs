@@ -69,8 +69,39 @@ namespace TravelPalette.BL
                 throw;
             }
         }
+        public static int Delete(int id, string locationId, bool rollback = false)
+        {
+            try
+            {
+                int result = 0;
+                using (TravelPaletteEntities dc = new TravelPaletteEntities())
+                {
+                    IDbContextTransaction transaction = null;
+                    if (rollback) transaction = dc.Database.BeginTransaction();
 
-        public static int Delete(int Id, bool rollback = false)
+                    // Find the specific junction record
+                    tblListItem entity = dc.tblListItems.FirstOrDefault(li => li.LocationId == locationId);
+
+                    if (entity != null)
+                    {
+                        dc.tblListItems.Remove(entity);
+                        result = dc.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("ListItem does not exist.");
+                    }
+
+                    if (rollback) transaction.Rollback();
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static int DeleteAll(int Id, bool rollback = false)
         {
             try
             {
@@ -157,5 +188,6 @@ namespace TravelPalette.BL
                 throw;
             }
         }
+
     }
 }

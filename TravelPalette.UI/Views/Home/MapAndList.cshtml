@@ -2,15 +2,31 @@
 @using Microsoft.JSInterop
 @using TravelPalette.BL;
 @using TravelPalette.BL.Models;
+@using Newtonsoft.Json;
 @inject IJSRuntime JS
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    string userId = HttpContextAccessor.HttpContext?.Session.GetString("UserId");
-    
+    var userId = HttpContextAccessor.HttpContext?.Session.GetString("UserId");
+    List<Location> locations = new List<Location>(); // Initialize with an empty list
+    int intId = -1;
+
+    if (!String.IsNullOrEmpty(userId))
+    {
+        try
+        {
+
+            intId = int.Parse(userId);
+            locations = LocationManager.LoadByUserId(intId);
+        } catch
+        {
+            intId = -1;
+        }
+    }
 }
+
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <div class="map-container" id="map">
@@ -25,13 +41,28 @@
         <div id="listings" class="listings"></div>
     </div>
     <div class="info-container">
-        <div class="header">My List</div>
+        <div class="header">
+            My List
+            <button id="btnClearList" onclick="clearUserList()">Clear List</button>
+            </div>
         <div id="userList" class="userList"></div>
     </div>
 </div>
-
-
-
+<script type="text/javascript">
+    function clearUserList() {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("ClearList", "ListItem")',
+            data: '@intId',
+            success: function (response) {
+                //console.log('Server response:', response);
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+</script>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGV1bWFzMTIzMSIsImEiOiJjbHNjbDBtenMwcjRwMmtxbG1lMWVvNWo0In0.oawYLGHq-hDv7aFDdWrbSw';
 
@@ -3102,6 +3133,7 @@
                 for (const feature of places.features) {
                     if (this.id === `addbtn-${feature.properties.id}`) {
                         addToList(feature);
+                        updateList();
                     }
                 }
             });
@@ -3152,7 +3184,7 @@
             latitude: latitude,
             longitude: longitude
 
-        };
+        }; 
 
         // Sends our object to the UserList Controller
         $.ajax({
@@ -3160,11 +3192,136 @@
             url: '@Url.Action("AddToList", "UserList")', 
             data: locationData, 
             success: function (response) {
-                console.log('Server response:', response);
+                //console.log('Server response:', response);
             },
             error: function (error) {
                 console.error('Error:', error);
             }
         });
+        
     }
+
+    
+
+    var locations = @Html.Raw(Json.Serialize(locations));
+    console.log(locations);
+
+    for (const location of locations) {
+        const listingAmenity = location.description;
+
+        // Add a new listing section to the sidebar.
+        const listings = document.getElementById('userList');
+        const listing = listings.appendChild(document.createElement('div'));
+        listing.id = `listing-${location.addressId}`;
+        listing.className = 'item';
+
+        // Add the link to the individual listing created above.
+        const link = listing.appendChild(document.createElement('a'));
+        link.href = '#';
+        link.className = 'title';
+        link.id = `link-${location.addressId}`;
+        link.innerHTML = `${location.businessName}`;
+        const details = listing.appendChild(document.createElement('div'));
+        details.innerHTML = `${listingAmenity}`;
+        if (location.cuisine) {
+            details.innerHTML += ` &middot; ${location.cuisine}`; 
+        }
+        if (location.website) {
+            const website = listing.appendChild(document.createElement('a'));
+            website.href = `${location.website}`;
+            website.target = "_blank";
+            website.className = 'title';
+            website.id = `link-${location.addressId}`;
+            website.innerHTML = 'Website';
+        }
+        if (location.phone) {
+            details.innerHTML += ` &middot; ${location.phoneNumber}`; 
+        }
+
+        // Event listener for individual listing click
+        link.addEventListener('click', function () {
+            for (const feature of places.features) {
+                if (this.id === `link-${feature.properties.id}`) {
+                    flyToStore(feature);
+                    createPopUp(feature);
+                }
+            }
+            const activeItem = document.getElementsByClassName('active');
+            if (activeItem[0]) {
+                activeItem[0].classList.remove('active');
+            }
+            this.parentNode.classList.add('active');
+        });
+    }
+    // BROKEN CODE to update the list in real-time
+
+    // function updateList() {
+    //     var myTimeout;
+
+    //     $.ajax({
+    //         url: '/Location/LoadByUserId/',
+    //         type: 'GET',
+    //         success: function (data) {
+
+                
+                    // Copied code again..
+
+                    
+    //             var listing = document.getElementById("userList");
+    //             if (Array.isArray(data)) {
+    //                 data.forEach(function (item) {
+    //                     const listingAmenity = item.description;
+
+    //                     const listing = listings.appendChild(document.createElement('div'));
+    //                     listing.id = `listing-${item.addressId}`;
+    //                     listing.className = 'item';
+
+    //                     const link = listing.appendChild(document.createElement('a'));
+    //                     link.href = '#';
+    //                     link.className = 'title';
+    //                     link.id = `link-${item.addressId}`;
+    //                     link.innerHTML = `${item.buisnessName}`;
+
+    //                     const details = listing.appendChild(document.createElement('div'));
+    //                     details.innerHTML = `${listingAmenity}`;
+    //                     if (item.cuisine) {
+    //                         details.innerHTML += ` &middot; ${item.cuisine}`;
+    //                     }
+    //                     if (item.website) {
+    //                         const website = listing.appendChild(document.createElement('a'));
+    //                         website.href = `${item.website}`;
+    //                         website.target = "_blank";
+    //                         website.className = 'title';
+    //                         website.id = `link-${item.addressId}`;
+    //                         website.innerHTML = 'Website';
+    //                     }
+    //                     if (item.phone) {
+    //                         details.innerHTML += ` &middot; ${item.phoneNumber}`; 
+    //                     }
+
+    //                     link.addEventListener('click', function () {
+    //                         for (const feature of places.features) {
+    //                             if (this.id === `link-${feature.properties.id}`) {
+    //                                 flyToStore(feature);
+    //                                 createPopUp(feature);
+    //                             }
+    //                         }
+    //                         const activeItem = document.getElementsByClassName('active');
+    //                         if (activeItem[0]) {
+    //                             activeItem[0].classList.remove('active');
+    //                         }
+    //                         this.parentNode.classList.add('active');
+    //                     });
+    //                 });
+
+    //             }
+    //         },
+    //         complete: function () {
+    //             myTimeout = setTimeout(updateList, 1000);
+    //         },
+    //         timeout: 2000
+    //     }); 
+    // }
+
+
 </script>

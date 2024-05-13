@@ -137,7 +137,7 @@ namespace TravelPalette.UI.Controllers
             try
             {
                 int result = UserManager.Delete(id, rollback);
-                int listItemResult = ListItemManager.Delete(id, rollback);
+                int listItemResult = ListItemManager.DeleteAll(id, rollback);
                 int userListResutl = UserListManager.Delete(id, rollback);
                 return RedirectToAction(nameof(Index));
             }

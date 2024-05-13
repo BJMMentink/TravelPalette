@@ -26,7 +26,7 @@ namespace TravelPalette.BL.Test
             ListItem listItem = new ListItem
             {
                 Id = id,
-                LocationId = 400
+                LocationId = "400"
             };
 
             int results = ListItemManager.Insert(listItem, true);
@@ -37,7 +37,7 @@ namespace TravelPalette.BL.Test
         public void UpdateTest()
         {
             ListItem listItem = ListItemManager.LoadById(2);
-            listItem.LocationId = 500;
+            listItem.LocationId = "500";
 
             int results = ListItemManager.Update(listItem, true);
             Assert.AreEqual(1, results);
@@ -46,7 +46,8 @@ namespace TravelPalette.BL.Test
         [TestMethod]
         public void DeleteTest()
         {
-            int results = ListItemManager.Delete(1, true);
+
+            int results = ListItemManager.Delete(1, "locationId" ,true);
             Assert.AreEqual(1, results);
         }
     }
