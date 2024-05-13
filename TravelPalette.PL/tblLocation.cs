@@ -7,7 +7,7 @@ public partial class tblLocation
 {
     public int Id { get; set; }
 
-    public int AddressId { get; set; }
+    public string AddressId { get; set; }
 
     public string Description { get; set; } = null!;
 
