@@ -59,7 +59,7 @@ namespace TravelPalette.UI.Controllers
 
                 int listResult = UserListManager.Insert(userList);
                 SetUser(user);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {

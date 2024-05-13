@@ -14,21 +14,20 @@ namespace TravelPalette.UI.Controllers
             return View(ListItemManager.Load());
         }
 
-        public IActionResult ClearList(int intId)
+        public IActionResult Clear()
         {
-            try
+            string userId = HttpContext.Session.GetString("UserId");
+            if (!String.IsNullOrEmpty(userId))
             {
-                var item = ListItemManager.LoadById(intId);
-
+                int Id = int.Parse(userId);
+                var item = ListItemManager.LoadById(Id);
                 int result = ListItemManager.Delete(item.Id, item.LocationId, false);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
+            else
             {
-                ViewBag.Error = ex.Message;
-                return View();
+                return null;
             }
-
         }
 
         // GET: UserListController/Delete/5
